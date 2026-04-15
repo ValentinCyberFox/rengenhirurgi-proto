@@ -193,7 +193,13 @@
         .teaser-hero {
             font-size: 16px;
             color: #333;
-            max-width: 640px;
+        }
+
+        .hero-article-content {
+            max-width: 760px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Возвращаем воздух */
         }
 
 
@@ -431,14 +437,16 @@
                 <div class="hero-img"><img
                         src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=80"
                         alt="Surgery"></div>
-                <div class="meta">
-                    <span class="tag tag-article">Статья</span>
-                    <span class="meta-date">15 Марта • 8 мин чтения</span>
+                <div class="hero-article-content">
+                    <div class="meta">
+                        <span class="tag tag-article">Статья</span>
+                        <span class="meta-date">15 Марта • 8 мин чтения</span>
+                    </div>
+                    <a href="article.html" class="title-lg">Тромболизис при ишемическом инсульте: обзор новых методик 2026
+                        года</a>
+                    <p class="teaser-hero">Разбираем новые рекомендации Европейского общества кардиологов. Почему
+                        эффективность метода выросла на 15% и что изменилось в протоколах подготовки пациента.</p>
                 </div>
-                <a href="article.html" class="title-lg">Тромболизис при ишемическом инсульте: обзор новых методик 2026
-                    года</a>
-                <p class="teaser-hero">Разбираем новые рекомендации Европейского общества кардиологов. Почему
-                    эффективность метода выросла на 15% и что изменилось в протоколах подготовки пациента.</p>
             </article>
 
             <!-- ВТОРОЙ ЭТАЖ -->
