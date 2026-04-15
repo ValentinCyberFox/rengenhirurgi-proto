@@ -339,16 +339,16 @@
             /* Ушли от больших скруглений к строгости */
         }
 
-        .info-row {
-            margin-bottom: 24px;
+        .info-label {
+            display: none;
+            /* Убираем метки-подписи */
         }
 
-        .info-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--gray-dark);
-            margin-bottom: 4px;
-            display: block;
+        .info-facts {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            /* Плотная группировка фактов */
         }
 
         .info-value {
@@ -357,22 +357,45 @@
             line-height: 1.4;
         }
 
-        .info-value a {
-            color: inherit;
-            border-bottom: 1px dashed var(--blue);
+        .map-link {
+            display: block;
+            margin-top: 6px;
+            font-size: 13px;
+            color: #6B7280;
+            text-decoration: none;
+            transition: color 0.1s;
+        }
+
+        .map-link:hover {
+            color: var(--blue);
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #E5E7EB;
+            margin: 24px 0;
+            width: 100%;
+        }
+
+        .sidebar-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-download-link {
+            display: block;
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4B5563;
+            text-decoration: none;
             transition: color 0.2s;
         }
 
-        .info-value a:hover {
+        .btn-download-link:hover {
             color: var(--blue);
-        }
-
-        .map-label {
-            display: block;
-            font-size: 13px;
-            color: var(--blue);
-            margin-top: 4px;
-            font-weight: 500;
         }
 
         .btn {
@@ -414,24 +437,21 @@
             gap: 8px;
             font-size: 14px;
             font-weight: 500;
-            color: var(--blue);
-            text-decoration: underline;
+            color: var(--gray-dark);
+            text-decoration: none;
             margin-top: 24px;
             cursor: pointer;
             padding: 0;
             background: none;
             border: none;
+            transition: color 0.2s;
         }
 
         .btn-print:hover {
-            color: var(--blue-hover);
-            text-decoration: none;
+            color: var(--blue);
         }
 
         .organizer {
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border);
             font-size: 13px;
             color: var(--gray-dark);
             line-height: 1.5;
@@ -930,37 +950,32 @@
         <!-- ПРАВАЯ ЧАСТЬ (САЙДБАР) -->
         <aside class="sidebar">
             <div class="action-card">
-                <div class="info-row">
-                    <span class="info-label">Когда</span>
+                <!-- БЛОК ФАКТОВ -->
+                <div class="info-facts">
                     <div class="info-value">15 мая 2026, 09:00</div>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Где</span>
                     <div class="info-value">
-                        <a href="https://yandex.ru/maps/?text=Казань, ул. Ершова, 1А, ГТРК «Корстон»" target="_blank">
-                            Казань, ул. Ершова, 1А, <br>ГТРК «Корстон»
+                        Казань, ул. Ершова, 1А, <br>ГТРК «Корстон»
+                        <a href="https://yandex.ru/maps/?text=Казань, ул. Ершова, 1А, ГТРК «Корстон»" target="_blank"
+                            class="map-link">
+                            Яндекс Карты ↗
                         </a>
-                        <span class="map-label">Яндекс Карты</span>
                     </div>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Участие</span>
                     <div class="info-value">Бесплатно</div>
                 </div>
 
-                <!-- ДВЕ КНОПКИ ДЕЙСТВИЯ -->
-                <button class="btn btn-reg">Зарегистрироваться очно</button>
-                <button class="btn btn-online">Смотреть трансляцию</button>
+                <hr class="divider">
 
-                <div class="btn-print" onclick="window.print()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    <span>Сохранить программу (PDF)</span>
+                <!-- ДЕЙСТВИЯ -->
+                <div class="sidebar-actions">
+                    <button class="btn btn-reg" style="margin-bottom:0">Зарегистрироваться</button>
+                    <button class="btn btn-online" style="margin-bottom:0">Смотреть трансляцию</button>
                 </div>
+
+                <a href="#" class="btn-download-link" onclick="window.print(); return false;">
+                    Скачать программу
+                </a>
+
+                <hr class="divider">
 
                 <div class="organizer">
                     Организатор: Российское кардиологическое общество (РКО)
