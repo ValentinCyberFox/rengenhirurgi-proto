@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рентгенхирурги | Календарь мероприятий</title>
+    <!-- Используем системные шрифты для максимальной скорости и строгости -->
+    <style>
+        :root {
+            --blue: #0056b3;
+            --blue-hover: #004494;
+            --black: #111;
+            --gray-dark: #555;
+            --gray-light: #f4f4f4;
+            --border: #e0e0e0;
+            --red: #d93025;
+            --green: #0f9d58;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--black);
+            line-height: 1.4;
+            background-color: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* === 1. ШАПКА === */
+        header {
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .header-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: var(--blue);
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue);
+        }
+
+
+        /* === 2. ВИТРИНА (Геройский блок) === */
+        .showcase {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            max-width: 1120px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        .card-main {
+            background: var(--black);
+            color: #fff;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 400px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card-main:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-side {
+            background: var(--gray-light);
+            padding: 30px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .card-side:hover {
+            transform: translateY(-4px);
+            background: #ededed;
+        }
+
+        .card-side.news {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .card-side.news:hover {
+            background: var(--blue-hover);
+        }
+
+        .tag {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .tag-red {
+            color: #ff6b6b;
+        }
+
+        .tag-gray {
+            color: var(--gray-dark);
+        }
+
+        .tag-white {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .title-xl {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .title-md {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .desc {
+            font-size: 15px;
+            opacity: 0.8;
+            margin-bottom: 24px;
+            max-width: 500px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--blue);
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--blue-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* === ДВУХЭТАЖНЫЕ ФИЛЬТРЫ === */
+        .filters {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            max-width: 1120px;
+            margin: 0 auto;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            border-top: 1px solid var(--border);
+        }
+
+        .filters-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px 40px;
+            /* Паддинг внутри, чтобы границы были шире текста */
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        /* --- Первый этаж (Инпуты) --- */
+        .filter-box {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0 12px;
+            height: 44px;
+            transition: border-color 0.2s;
+        }
+
+        .filter-box:focus-within {
+            border-color: var(--blue);
+        }
+
+        .f-search {
+            flex-grow: 1;
+        }
+
+        .f-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--gray-dark);
+            flex-shrink: 0;
+        }
+
+        .f-label {
+            font-size: 13px;
+            color: var(--gray-dark);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+
+        .f-location-search {
+            position: relative;
+            cursor: text;
+        }
+
+        .search-dropdown {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            /* Скрыт по умолчанию */
+        }
+
+        .dropdown-item {
+            padding: 10px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: var(--gray-light);
+            color: var(--black);
+            /* Убрали синий цвет при наведении, оставили строгий черный */
+        }
+
+        .dropdown-group {
+            padding: 24px 16px 8px;
+            /* Внешний отступ сверху больше внутреннего снизу (E > I) */
+            font-size: 12px;
+            font-weight: 700;
+            color: #999;
+            /* Спокойный серый вместо кричащего синего */
+            text-transform: uppercase;
+            /* Легкая разрядка для прописных */
+            letter-spacing: 1px;
+            /* Убрали лишние фоны и рамки (Data-ink ratio) */
+        }
+
+        .filter-box input[type="text"],
+        .filter-box input[type="date"],
+        .filter-box select,
+        .f-input-search {
+            border: none;
+            background: transparent;
+            padding: 0 8px;
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--black);
+            outline: none;
+            cursor: text;
+        }
+
+        /* --- Второй этаж (Чипсы и Галочки) --- */
+        .sub-filters {
+            justify-content: space-between;
+            /* Темы слева, галочки справа */
+        }
+
+        .f-chips-wrap {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .f-chips-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+        }
+
+        .f-chips {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Скрываем стандартный кружок радиокнопки */
+        .chip input[type="radio"],
+        .toggle-btn input[type="checkbox"] {
+            display: none;
+        }
+
+        /* Дизайн таблетки (Тема) */
+        .chip span {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--gray-light);
+            border-radius: 20px;
+            /* Круглые края */
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-dark);
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .chip span:hover {
+            background: #e2e2e2;
+        }
+
+        /* Состояние: Тема выбрана */
+        .chip input[type="radio"]:checked+span {
+            background: var(--black);
+            color: #fff;
+        }
+
+        .f-toggles {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Дизайн кнопок-галочек */
+        .toggle-btn span {
+            display: inline-block;
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--black);
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            background: #fff;
+        }
+
+        .toggle-btn span:hover {
+            border-color: var(--gray-dark);
+        }
+
+        /* Состояние: Галочка нажата */
+        .toggle-btn input[type="checkbox"]:checked+span {
+            border-color: var(--blue);
+            background: rgba(0, 86, 179, 0.05);
+            /* Легкая синяя подсветка */
+            color: var(--blue);
+        }
+
+        /* === 4. КАЛЕНДАРЬ (Timeline) === */
+        .timeline-container {
+            max-width: 1120px;
+            margin: 60px auto;
+        }
+
+        .month-header {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            padding: 0 40px 15px 40px;
+            /* Паддинг здесь, чтобы линия была шире текста */
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .month-note {
+            font-size: 11px;
+            color: var(--gray-dark);
+            font-weight: 400;
+        }
+
+        .day-group {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+            max-width: 800px;
+            padding: 0 40px;
+            /* Паддинг для контента */
+        }
+
+        .date-sticky {
+            position: sticky;
+            top: 130px;
+            /* Ниже двухэтажных фильтров */
+            height: fit-content;
+        }
+
+        .day-num {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .day-name {
+            font-size: 13px;
+            color: var(--gray-dark);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .event-card {
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .event-card:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .meta {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            font-size: 10px;
+            /* Делаем плашки мельче, чтобы они не лезли на первый план */
+            border: none !important;
+            /* Убиваем любой шум */
+        }
+
+        .b-online {
+            background: rgba(245, 127, 23, 0.08);
+            color: #e65100;
+        }
+
+        .b-offline {
+            background: rgba(46, 125, 50, 0.08);
+            color: #2e7d32;
+        }
+
+        .b-hybrid {
+            background: rgba(103, 58, 183, 0.08);
+            /* Фиолетовый для гибридов — выделяется, но деликатно */
+            color: #512da8;
+        }
+
+        .b-nmo {
+            background: rgba(25, 118, 210, 0.08);
+            color: #1565c0;
+        }
+
+        .b-record {
+            background: rgba(0, 0, 0, 0.04);
+            color: #555;
+        }
+
+        .event-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--blue);
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.15s ease;
+            margin-top: 8px;
+        }
+
+        .event-link::after {
+            content: "→";
+            font-size: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .event-link:hover {
+            color: var(--blue-hover);
+        }
+
+        .event-link:hover::after {
+            transform: translateX(4px);
+        }
+
+        .event-link.secondary {
+            color: var(--gray-dark);
+            font-weight: 500;
+        }
+
+        .event-link.secondary:hover {
+            color: var(--black);
+        }
+
+        .btn-load-more {
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--black);
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-load-more:hover {
+            border-color: var(--gray-dark);
+            background: var(--gray-light);
+        }
+
+
+        .time {
+            font-weight: 400;
+            color: var(--gray-dark);
+        }
+
+        .event-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .event-title a:hover {
+            color: var(--blue);
+        }
+
+        .event-place {
+            font-size: 14px;
+            color: var(--gray-dark);
+            margin-bottom: 15px;
+        }
+
+        .event-teaser {
+            font-size: 15px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* === 5. ВРЕЗКА ПОДПИСКИ === */
+        .sub-feed {
+            grid-column: 1 / -1;
+            /* На всю ширину сетки */
+            background: var(--gray-light);
+            padding: 40px;
+            border-radius: 4px;
+            margin: 20px 0 60px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sub-text h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .sub-text p {
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+
+        .sub-form {
+            display: flex;
+            gap: 10px;
+            width: 400px;
+        }
+
+        .sub-input {
+            flex-grow: 1;
+            height: 44px;
+            padding: 0 15px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .sub-form .btn {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 25px;
+        }
+
+        .sub-note {
+            font-size: 11px;
+            color: var(--gray-dark);
+            margin-top: 8px;
+            display: block;
+        }
+
+        /* === 6. КОНЕЦ ЛЕНТЫ === */
+        .end-state {
+            text-align: center;
+            padding: 60px 0;
+            color: var(--gray-dark);
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        /* === 7. ФУТЕР === */
+        .main-footer {
+            background: #fff;
+            border-top: 1px solid var(--border);
+            padding: 80px 0 60px;
+            margin-top: 100px;
+        }
+
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand h2 {
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--gray-dark);
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-size: 11px;
+            font-weight: 700;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .footer-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-list a {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--black);
+            transition: color 0.2s;
+        }
+
+        .footer-list a:hover {
+            color: var(--blue);
+        }
+
+        .footer-contact-item {
+            margin-bottom: 20px;
+        }
+
+        .footer-label {
+            display: block;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .footer-contact-link {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-bottom-link:hover {
+            color: var(--black);
+        }
+
+        /* Адаптив для мобилок */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* На мобилке нужен бургер */
+            .showcase {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+                margin: 20px auto;
+            }
+
+            .card-main {
+                min-height: 300px;
+                padding: 25px;
+            }
+
+            .filters {
+                padding: 12px 20px;
+            }
+
+            .main-filters {
+                flex-wrap: wrap;
+            }
+
+            .f-search {
+                width: 100%;
+                order: -1;
+            }
+
+            /* Поиск на всю ширину сверху */
+            .f-select,
+            .f-date {
+                width: calc(50% - 8px);
+                flex-grow: 1;
+            }
+
+            .sub-filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            /* Горизонтальный скролл для тем на мобилке (как в Telegram/YouTube) */
+            .f-chips {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                /* Место для скроллбара */
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .f-chips::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* Прячем ползунок */
+            .chip span {
+                white-space: nowrap;
+            }
+
+            .f-toggles {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .timeline-container {
+                padding: 0 20px;
+                margin: 40px auto;
+            }
+
+            .day-group {
+                display: block;
+            }
+
+            .date-sticky {
+                position: static;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid var(--black);
+            }
+
+            .day-num {
+                display: inline-block;
+                font-size: 24px;
+                margin-right: 10px;
+            }
+
+            .day-name {
+                display: inline-block;
+            }
+
+            .sub-feed {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+                padding: 25px;
+            }
+
+            .sub-form {
+                width: 100%;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- ШАПКА -->
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="logo">Рентгенхирурги</a>
+            <div class="nav-links">
+                <a href="index.html">Мероприятия</a>
+                <a href="jurnal.html">Журнал</a>
+                <a href="clinrec.html">Клинреки</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ВИТРИНА -->
+    <section class="showcase">
+        <a href="event-detail.html" class="card-main">
+            <span class="tag tag-red">Главное событие весны</span>
+            <h1 class="title-xl">Форум «Огнестрельная рана»</h1>
+            <p class="desc">18—20 апреля • Санкт-Петербург. Обсуждаем хирургию повреждений. Спикеры из ВМА и НИИ
+                Склифосовского.</p>
+            <div><span class="btn">Программа и билеты</span></div>
+        </a>
+
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <a href="event-detail.html" class="card-side">
+                <div>
+                    <span class="tag tag-gray">Вебинар</span>
+                    <h2 class="title-md">Сложные коронарные вмешательства</h2>
+                    <p class="desc" style="font-size: 14px; margin-bottom: 10px;">Разбор кейсов на симуляторах.</p>
+                </div>
+                <div style="font-size: 13px; font-weight: 600;">22 Апреля • Онлайн</div>
+            </a>
+            <a href="article.html" class="card-side news">
+                <div>
+                    <span class="tag tag-white">Новость</span>
+                    <h2 class="title-md">Утвержден новый стандарт оснащения операционных</h2>
+                </div>
+                <div><span class="btn btn-outline">Читать статью</span></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ДВУХЭТАЖНЫЕ ЛИПКИЕ ФИЛЬТРЫ -->
+    <div class="filters">
+        <div class="filters-inner">
+
+            <!-- ПЕРВЫЙ ЭТАЖ: Поиск, Город, Дата -->
+            <div class="filters-row main-filters">
+                <!-- Поиск -->
+                <div class="filter-box f-search">
+                    <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" placeholder="Поиск по названию или спикеру...">
+                </div>
+
+                <!-- Локация (Кастомный поиск) -->
+                <div class="filter-box f-location-search">
+                    <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <input type="text" placeholder="Введите город..." class="f-input-search" id="citySearchInput">
+
+                    <div class="search-dropdown" id="cityDropdown">
+                        <div class="dropdown-group">Россия</div>
+                        <div class="dropdown-item">Москва</div>
+                        <div class="dropdown-item">Санкт-Петербург</div>
+                        <div class="dropdown-item">Новосибирск</div>
+
+                        <div class="dropdown-group">Мир</div>
+                        <div class="dropdown-item">Париж (Франция)</div>
+                        <div class="dropdown-item">Сеул (Южная Корея)</div>
+                        <div class="dropdown-item">Лейпциг (Германия)</div>
+                        <div class="dropdown-item">Барселона (Испания)</div>
+                    </div>
+                </div>
+
+                <!-- Дата (Прыжок) -->
+                <div class="filter-box f-date">
+                    <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span class="f-label">Показать с:</span>
+                    <input type="date" value="2026-03-27">
+                </div>
+            </div>
+
+            <!-- ВТОРОЙ ЭТАЖ: Темы (Чипсы) и Свойства (Галочки) -->
+            <div class="filters-row sub-filters">
+                <div class="f-chips-wrap">
+                    <!-- Формат (Самое важное) -->
+                    <div class="f-chips" id="formatFilters">
+                        <label class="chip">
+                            <input type="radio" name="format" value="all" checked>
+                            <span>Любой формат</span>
+                        </label>
+                        <label class="chip">
+                            <input type="radio" name="format" value="offline">
+                            <span>Очно</span>
+                        </label>
+                        <label class="chip">
+                            <input type="radio" name="format" value="online">
+                            <span>Онлайн</span>
+                        </label>
+                        <label class="chip">
+                            <input type="radio" name="format" value="hybrid">
+                            <span>С трансляцией</span>
+                        </label>
+                    </div>
+
+                    <div class="f-chips-divider" id="formatDivider"></div>
+
+                    <!-- География (Дополнительно) -->
+                    <div class="f-chips" id="geoFilters">
+                        <label class="chip">
+                            <input type="radio" name="geo" value="all" checked>
+                            <span>Везде</span>
+                        </label>
+                        <label class="chip">
+                            <input type="radio" name="geo" value="ru">
+                            <span>Россия</span>
+                        </label>
+                        <label class="chip">
+                            <input type="radio" name="geo" value="world">
+                            <span>За рубежом</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Свойства (Чекбоксы) -->
+                <div class="f-toggles">
+                    <label class="toggle-btn">
+                        <input type="checkbox">
+                        <span>Только с баллами НМО</span>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const formatRadios = document.querySelectorAll('input[name="format"]');
+            const locationSearchBox = document.querySelector('.f-location-search');
+            const geoFilters = document.getElementById('geoFilters');
+            const cityInput = document.getElementById('citySearchInput');
+
+            formatRadios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    if (this.value === 'online') {
+                        // Для онлайна скрываем поле "Город" и фильтры географии, так как они не релевантны
+                        locationSearchBox.style.display = 'none';
+                        geoFilters.style.display = 'none';
+                    } else {
+                        // Для остальных форматов возвращаем
+                        locationSearchBox.style.display = 'flex'; // У нас filter-box использует flex
+                        geoFilters.style.display = 'flex';
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- БЕСКОНЕЧНЫЙ КАЛЕНДАРЬ -->
+    <main class="timeline-container">
+        <div class="month-header">
+            <span>Апрель 2026</span>
+            <span class="month-note">Время указано по Москве</span>
+        </div>
+
+        <!-- ДЕНЬ 1: Многодневный ивент (Старт) и Однодневный, разные таймзоны (все в ) -->
+        <div class="day-group">
+            <div class="date-sticky">
+                <div class="day-num">10</div>
+                <div class="day-name">Пятница</div>
+            </div>
+            <div class="events">
+                <article class="event-card">
+                    <div class="meta">
+                        <span class="time">08:00&nbsp;</span>
+                        <span class="badge b-offline">Очно</span>
+                    </div>
+                    <h3 class="event-title"><a href="event-detail.html">Завтрак с профессором: новые подходы</a></h3>
+                    <div class="event-place">Санкт-Петербург, НМИЦ им. Алмазова</div>
+                    <p class="event-teaser">Обсуждение сложных клинических случаев в узком кругу. Количество мест
+                        ограничено.</p>
+                    <a href="event-detail.html" class="event-link">Программа и регистрация</a>
+                </article>
+
+                <article class="event-card">
+                    <div class="meta">
+                        <span class="time">10:00&nbsp;</span>
+                        <span class="meta-date">10—13&nbsp;апреля</span>
+                        <span class="badge b-hybrid">С трансляцией</span>
+                        <span class="badge b-nmo">12 НМО</span>
+                    </div>
+                    <h3 class="event-title"><a href="event-detail.html">Дальневосточный конгресс хирургов. День 1</a>
+                    </h3>
+                    <div class="event-place">Хабаровск, ДВФУ</div>
+                    <p class="event-teaser">Крупнейшее событие региона. В первый день — пленарное заседание и
+                        выставка оборудования.</p>
+                    <a href="event-detail.html" class="event-link">Программа и регистрация</a>
+                </article>
+
+                <article class="event-card">
+                    <div class="meta">
+                        <span class="time">16:00&nbsp;</span>
+                        <span class="badge b-online">Онлайн</span>
+                    </div>
+                    <h3 class="event-title"><a href="event-detail.html">Разбор кейсов периферической ангиографии</a>
+                    </h3>
+                    <div class="event-place">Стамбул (Трансляция)</div>
+                    <p class="event-teaser">Зарубежный вебинар с синхронным переводом на русский язык.</p>
+                    <a href="event-detail.html" class="event-link">Программа и регистрация</a>
+                </article>
+            </div>
+        </div>
+
+        <!-- ДЕНЬ 2: Продолжение многодневного ивента -->
+        <div class="day-group">
+            <div class="date-sticky">
+                <div class="day-num">11</div>
+                <div class="day-name">Суббота</div>
+            </div>
+            <div class="events">
+                <article class="event-card">
+                    <div class="meta">
+                        <span class="time">10:00&nbsp;</span>
+                        <span class="meta-date">10—13&nbsp;апреля</span>
+                        <span class="badge b-hybrid">С трансляцией</span>
+                        <span class="badge b-nmo">12 НМО</span>
+                    </div>
+                    <h3 class="event-title"><a href="event-detail.html">Дальневосточный конгресс хирургов. День 2</a>
+                    </h3>
+                    <div class="event-place">Хабаровск, ДВФУ</div>
+                    <p class="event-teaser">Второй день посвящен исключительно практическим мастер-классам на
+                        симуляторах.</p>
+                    <a href="event-detail.html" class="event-link">Программа и регистрация</a>
+                </article>
+            </div>
+        </div>
+
+        <!-- ВРЕЗКА ПОДПИСКИ В ЛЕНТУ -->
+        <div class="sub-feed">
+            <div class="sub-text">
+                <h3>Расписание и статьи на почту</h3>
+                <p>Присылаем обновления раз в неделю. Без спама.</p>
+            </div>
+            <div>
+                <form class="sub-form">
+                    <input type="email" class="sub-input" placeholder="Ваш e-mail" required>
+                    <button type="submit" class="btn">Подписаться</button>
+                </form>
+                <span class="sub-note">Отписаться можно в любой момент</span>
+            </div>
+        </div>
+
+        <div class="month-header" style="margin-top: 60px;">Март 2026</div>
+
+        <!-- ДЕНЬ 3: Прошедшее с записью -->
+        <div class="day-group">
+            <div class="date-sticky">
+                <div class="day-num">25</div>
+                <div class="day-name">Среда</div>
+            </div>
+            <div class="events">
+                <article class="event-card">
+                    <div class="meta">
+                        <span class="time">14:00&nbsp;</span>
+                        <span class="badge b-online">Онлайн</span>
+                        <span class="badge b-nmo">2 НМО</span>
+                        <span class="badge b-record">Есть запись</span>
+                    </div>
+                    <h3 class="event-title"><a href="event-detail.html">Разбор клинического случая: Тромбэктомия</a>
+                    </h3>
+                    <div class="event-place">Круглый стол</div>
+                    <p class="event-teaser">Обсуждение тактики лечения пациента с острым нарушением мозгового
+                        кровообращения.</p>
+                    <a href="event-detail.html" class="event-link secondary">К материалам</a>
+                </article>
+            </div>
+        </div>
+
+        <!-- ДЕНЬ 4: Прошедшее без записи (кнопка Подробнее) -->
+        <div class="day-group">
+            <div class="date-sticky">
+                <div class="day-num">20</div>
+                <div class="day-name">Пятница</div>
+            </div>
+            <div class="events">
+                <article class="event-card">
+                    <div class="meta">
+                        <span class="time">09:00&nbsp;</span>
+                        <span class="badge b-offline">Очно</span>
+                        <span class="badge b-nmo">6 НМО</span>
+                    </div>
+                    <h3 class="event-title"><a href="event-detail.html">Школа аритмологии: Практический курс</a></h3>
+                    <div class="event-place">Москва, НМИЦ Кардиологии</div>
+                    <p class="event-teaser">Курс по имплантации ЭКС и разбор сложных ЭКГ. Работа в операционной.</p>
+                    <a href="event-detail.html" class="event-link secondary">К материалам</a>
+                </article>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 60px 0;">
+            <button class="btn-load-more" onclick="alert('Загрузка...')">Показать еще <span
+                    style="color: var(--gray-dark);">(5)</span></button>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <!-- Колонка 1: Бренд -->
+                <div class="footer-brand">
+                    <h2>ТАРГЕТ МЕДИКАЛ</h2>
+                    <p>Образовательная платформа для врачей рентгенэндоваскулярной диагностики и терапии.</p>
+                </div>
+
+                <!-- Колонка 2: Разделы -->
+                <div class="footer-col">
+                    <h4>Разделы</h4>
+                    <ul class="footer-list">
+                        <li><a href="index.html">Календарь</a></li>
+                        <li><a href="jurnal.html">Журнал</a></li>
+                        <li><a href="clinrec.html">Клинреки</a></li>
+                        <li><a href="#">О проекте</a></li>
+                    </ul>
+                </div>
+
+                <!-- Колонка 3: Связь -->
+                <div class="footer-col">
+                    <h4>Связь</h4>
+                    <div class="footer-contact-item">
+                        <span class="footer-label">Почта</span>
+                        <a href="mailto:info@target-medical.ru" class="footer-contact-link">info@target-medical.ru</a>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-label">Телефон</span>
+                        <a href="tel:+74950000000" class="footer-contact-link">+7 495 000-00-00</a>
+                    </div>
+                </div>
+
+                <!-- Колонка 4: Соцсети -->
+                <div class="footer-col">
+                    <h4>Мы в сети</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">ВКонтакте</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026, Таргет Медикал</p>
+                <div class="footer-bottom-links">
+                    <a href="#" class="footer-bottom-link">Правовая информация</a>
+                    <a href="#" class="footer-bottom-link">Политика данных</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ЛОГИКА КАСТОМНОГО ПОИСКА -->
+    <script>
+        const input = document.getElementById('citySearchInput');
+        const dropdown = document.getElementById('cityDropdown');
+        const items = dropdown.querySelectorAll('.dropdown-item');
+
+        // Показ при фокусе
+        input.addEventListener('focus', () => { dropdown.style.display = 'block'; });
+
+        // Скрытие при клике вне
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.f-location-search')) dropdown.style.display = 'none';
+        });
+
+        // Фильтрация при вводе
+        input.addEventListener('input', () => {
+            const val = input.value.toLowerCase();
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(val) ? 'block' : 'none';
+            });
+        });
+
+        // Выбор элемента
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                input.value = item.textContent;
+                dropdown.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поволжская кардиологическая школа «Ритм и жизнь» | Рентгенхирурги</title>
+    <style>
+        :root {
+            --blue: #0056b3;
+            --blue-hover: #004494;
+            --black: #111;
+            --gray-dark: #555;
+            --gray: #666;
+            --gray-light: #f4f4f4;
+            --border: #e0e0e0;
+            --nmo-color: #2e7d32;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-main);
+            color: var(--black);
+            line-height: 1.5;
+            background: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* === 1. ШАПКА === */
+        header {
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .header-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: var(--blue);
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--black);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--blue);
+        }
+
+        .nav-back-container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 20px 40px 0;
+        }
+
+        .nav-back {
+            color: var(--gray-dark);
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover {
+            color: var(--blue);
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 40px 40px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .event-main {
+            min-width: 0;
+        }
+
+        /* ОСНОВНОЙ КОНТЕНТ */
+        .event-main h1 {
+            font-size: 42px;
+            line-height: 1.1;
+            margin: 0 0 32px 0;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .event-badges {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .badge-nmo {
+            background: rgba(46, 125, 50, 0.08);
+            color: #2e7d32;
+        }
+
+        .badge-hybrid {
+            background: rgba(103, 58, 183, 0.08);
+            color: #512da8;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 60px 0 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--black);
+            display: inline-block;
+            letter-spacing: 0.05em;
+            /* Разрядка для прописных */
+        }
+
+        .description {
+            font-size: 18px;
+            color: #333;
+            max-width: 700px;
+            line-height: 1.5;
+        }
+
+        /* === ПРОГРАММА (с секциями и председателями) === */
+        .program-section {
+            margin-bottom: 48px;
+            /* Внешний отступ больше внутреннего (E > I) */
+        }
+
+        .program-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .program-section-header {
+            margin-bottom: 20px;
+        }
+
+        .program-section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--black);
+        }
+
+        .program-section-meta {
+            font-size: 14px;
+            color: var(--gray-dark);
+            line-height: 1.5;
+        }
+
+        .program-section-meta-item {
+            margin-bottom: 4px;
+        }
+
+        .program-section-meta-label {
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .program-chairpersons {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+
+        .program-chairpersons-label {
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .program-list {
+            border-top: 1px solid var(--border);
+        }
+
+        .program-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .program-item:last-child {
+            border-bottom: none;
+        }
+
+        .program-time {
+            font-weight: 700;
+            color: var(--gray);
+            text-align: right;
+            /* Числа по правому краю (табличная гигиена) */
+            font-variant-numeric: tabular-nums;
+            /* Моноширинные цифры */
+            word-break: break-all;
+            /* Для интервалов времени */
+        }
+
+        .program-content h4 {
+            margin: 0 0 4px 0;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .program-content p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* СПИКЕРЫ */
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .speaker-card {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .extra-speakers {
+            display: none;
+        }
+
+        .extra-speakers.active {
+            display: contents;
+        }
+
+        .speaker-avatar {
+            width: 72px;
+            height: 72px;
+            min-width: 72px;
+            min-height: 72px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--gray-light);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .speaker-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            /* Лица чаще в верхней области кадра */
+            border-radius: 50%;
+            /* Дублируем для гарантии формы при печати */
+        }
+
+        .speaker-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .speaker-desc {
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--gray-dark);
+        }
+
+        .show-all-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--black);
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 40px;
+            font-family: inherit;
+            display: inline-block;
+        }
+
+        .show-all-btn:hover {
+            border-color: var(--gray-dark);
+            background: var(--gray-light);
+        }
+
+        /* САЙДБАР (STICKY) */
+        .sidebar {
+            position: sticky;
+            top: 40px;
+        }
+
+        .action-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 32px;
+            border-radius: 4px;
+            /* Ушли от больших скруглений к строгости */
+        }
+
+        .info-row {
+            margin-bottom: 24px;
+        }
+
+        .info-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-dark);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .info-value a {
+            color: inherit;
+            border-bottom: 1px dashed var(--blue);
+            transition: color 0.2s;
+        }
+
+        .info-value a:hover {
+            color: var(--blue);
+        }
+
+        .map-label {
+            display: block;
+            font-size: 13px;
+            color: var(--blue);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 4px;
+            transition: 0.2s;
+            cursor: pointer;
+            border: none;
+            margin-bottom: 12px;
+        }
+
+        .btn-reg {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .btn-reg:hover {
+            background: var(--blue-hover);
+        }
+
+        .btn-online {
+            background: #fff;
+            border: 1px solid var(--blue);
+            color: var(--blue);
+        }
+
+        .btn-online:hover {
+            background: rgba(0, 86, 179, 0.04);
+        }
+
+        .btn-print {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--blue);
+            text-decoration: underline;
+            margin-top: 24px;
+            cursor: pointer;
+            padding: 0;
+            background: none;
+            border: none;
+        }
+
+        .btn-print:hover {
+            color: var(--blue-hover);
+            text-decoration: none;
+        }
+
+        .organizer {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--gray-dark);
+            line-height: 1.5;
+        }
+
+        /* PRINT STYLES */
+        @media print {
+
+            header,
+            .nav-back-container,
+            footer,
+            .sidebar,
+            .show-all-btn,
+            .btn-print,
+            .event-badges {
+                display: none !important;
+            }
+
+            body {
+                background: #fff !important;
+                color: #000;
+                font-size: 12pt;
+                line-height: 1.4;
+            }
+
+            .container {
+                display: block !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .event-main {
+                width: 100% !important;
+            }
+
+            .session-info {
+                background: none !important;
+                padding: 0 !important;
+                border: none !important;
+                margin-bottom: 20pt;
+                border-bottom: 1px solid #000;
+                padding-bottom: 15pt !important;
+            }
+
+            .session-label {
+                color: #000;
+            }
+
+            .program-list {
+                border-top: 2pt solid #000;
+            }
+
+            .program-item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                gap: 20pt;
+                padding: 15pt 0;
+                border-bottom: 1px solid #ccc;
+            }
+
+            .program-item:last-child {
+                border-bottom: none;
+            }
+
+            .section-title {
+                margin-top: 40pt;
+                padding-top: 10pt;
+                border-top: 2pt solid #000;
+                page-break-after: avoid;
+                color: #000;
+            }
+
+            .event-main h1 {
+                font-size: 26pt;
+                margin-top: 0;
+                line-height: 1.1;
+                color: #000;
+            }
+
+            /* Добавляем шапку для печати */
+            .event-main::before {
+                content: "ТАРГЕТ МЕДИКАЛ | ПРОГРАММА МЕРОПРИЯТИЯ";
+                display: block;
+                font-size: 10pt;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                border-bottom: 2pt solid #000;
+                padding-bottom: 10pt;
+                margin-bottom: 25pt;
+                color: #000;
+            }
+
+            /* Показываем всех спикеров всегда */
+            .extra-speakers {
+                display: contents !important;
+            }
+
+            .speakers-grid {
+                gap: 20pt 30pt;
+            }
+
+            .speaker-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .speaker-avatar {
+                /* Жестко фиксируем размеры аватара для принтера, иначе рисует овалы */
+                width: 50pt !important;
+                height: 50pt !important;
+                min-width: 50pt !important;
+                min-height: 50pt !important;
+                max-width: 50pt !important;
+                max-height: 50pt !important;
+                background-color: transparent !important;
+                border-radius: 50% !important;
+            }
+
+            .speaker-avatar img {
+                border-radius: 50% !important;
+                object-position: center top !important;
+            }
+
+            .speaker-name {
+                color: #000;
+            }
+
+            .description {
+                color: #000;
+                /* Чтобы не был серым при печати */
+                font-size: 14pt;
+            }
+        }
+
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand h2 {
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--gray-dark);
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-size: 11px;
+            font-weight: 700;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .footer-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 0;
+        }
+
+        .footer-list a {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--black);
+            transition: color 0.2s;
+        }
+
+        .footer-list a:hover {
+            color: var(--blue);
+        }
+
+        .footer-contact-item {
+            margin-bottom: 20px;
+        }
+
+        .footer-label {
+            display: block;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .footer-contact-link {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-bottom-link {
+            color: inherit;
+        }
+
+        .footer-bottom-link:hover {
+            color: var(--black);
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                order: -1;
+                margin-bottom: 40px;
+            }
+
+            .event-main h1 {
+                font-size: 32px;
+            }
+
+            .speakers-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .speaker-card {
+                gap: 16px;
+            }
+
+            .program-item {
+                grid-template-columns: 60px 1fr;
+                gap: 16px;
+            }
+
+            .program-time {
+                text-align: right;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="logo">Рентгенхирурги</a>
+            <nav class="nav-links">
+                <a href="index.html" class="active">Мероприятия</a>
+                <a href="jurnal.html">Журнал</a>
+                <a href="clinrec.html">Клинреки</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-back-container">
+        <a href="index.html" class="nav-back">← Все события</a>
+    </div>
+
+    <div class="container">
+        <!-- ЛЕВАЯ ЧАСТЬ -->
+        <main class="event-main">
+            <div class="event-badges">
+                <span class="badge badge-nmo">12 НМО</span>
+                <span class="badge badge-hybrid">С трансляцией</span>
+            </div>
+
+            <h1>Поволжская кардиологическая школа «Ритм и жизнь»</h1>
+
+            <p class="description">
+                Крупнейшее событие региона для специалистов по аритмологии. Обсудим современные подходы к лечению
+                фибрилляции предсердий и новые протоколы имплантации ЭКС.
+            </p>
+
+            <h2 class="section-title">ПРОГРАММА</h2>
+
+            <div class="program-wrapper">
+                <!-- СЕКЦИЯ 1 -->
+                <div class="program-section">
+                    <div class="program-section-header">
+                        <div class="program-section-title">Торжественная часть</div>
+                        <div class="program-section-meta">
+                            <div class="program-section-meta-item">
+                                <span class="program-section-meta-label">Место:</span> г. Якутск, улица Курашова, 24,
+                                Общественный центр, 5 этаж
+                            </div>
+                        </div>
+                        <div class="program-chairpersons">
+                            <span class="program-chairpersons-label">Председатели:</span> Степанов Г. М., Афанасьева Л.
+                            Н.
+                        </div>
+                    </div>
+                    <div class="program-list">
+                        <div class="program-item">
+                            <div class="program-time">08:30</div>
+                            <div class="program-content">
+                                <h4>Регистрация участников</h4>
+                                <p>Холл перед конференц-залом</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-time">09:30</div>
+                            <div class="program-content">
+                                <h4>Приветствие участников</h4>
+                                <p><strong>Бурнашева Любовь Степановна</strong>, к.м.н., зам. министра здравоохранения
+                                    Республики Саха (Якутия)</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-time">09:35</div>
+                            <div class="program-content">
+                                <h4>Фармако-инвазивная тактика при инфаркте миокарда с подъемом ST ЭКГ</h4>
+                                <p><strong>Кылбанова Елена Семеновна</strong>, д.м.н., профессор, зав. кафедрой
+                                    «Внутренние болезни и ОВП» Медицинского института ФГАОУ ВО СВФУ им. М.К. Аммосова,
+                                    главный внештатный специалист-кардиолог Минздрава РС(Я)</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-time">09:50</div>
+                            <div class="program-content">
+                                <h4>От острого риска к долгосрочному контролю: стратегия комплексной защиты пациента
+                                    после ОКС</h4>
+                                <p><strong>Хасанов Нияз Рустемович</strong>, д.м.н., профессор, зав. кафедрой
+                                    пропедевтики внутренних болезней им. проф. С.С. Зимницкого ФГБОУ ВО Казанский ГМУ
+                                    (Казань)</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-time">10:50</div>
+                            <div class="program-content">
+                                <h4>Тромболитическая терапия при ИМ на догоспитальном этапе</h4>
+                                <p><strong>Иванова Альбина Аммосовна</strong>, д.м.н., доцент, главный врач ГБУ РС(Я)
+                                    «Станция скорой медицинской помощи», профессор кафедры анестезиологии и
+                                    реаниматологии СВФУ имени М.К. Аммосова</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-time">11:05</div>
+                            <div class="program-content">
+                                <h4>Антитромботическая терапия пациента со стабильными формами ИБС: акцент на
+                                    эффективности и безопасности</h4>
+                                <p><strong>Кашталап Василий Васильевич</strong>, д.м.н., профессор, зав. отделом
+                                    клинической кардиологии ФГБНУ «НИИ КПССЗ», проф. кафедры кардиологии Кемеровского
+                                    ГМУ (Кемерово)</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-time">11:35</div>
+                            <div class="program-content">
+                                <h4>Реканализация хронических окклюзий коронарных артерий</h4>
+                                <p><strong>Ларионов Анатолий Александрович</strong>, к.м.н., НМИЦ им. ак. Е.Н. Мешалкина
+                                    (Новосибирск)</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-time">12:00</div>
+                            <div class="program-content">
+                                <h4>Кофе-брейк</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- СЕКЦИЯ 2 -->
+                <div class="program-section">
+                    <div class="program-section-header">
+                        <div class="program-section-title">Практическая секция</div>
+                        <div class="program-section-meta">
+                            <div class="program-section-meta-item">
+                                <span class="program-section-meta-label">Место:</span> г. Якутск, улица Курашова, 24,
+                                Общественный центр, 3 этаж
+                            </div>
+                        </div>
+                        <div class="program-chairpersons">
+                            <span class="program-chairpersons-label">Председатели:</span> Иванов И. И., Петров П. П.
+                        </div>
+                    </div>
+                    <div class="program-list">
+                        <div class="program-item">
+                            <div class="program-time">13:00</div>
+                            <div class="program-content">
+                                <h4>Мастер-класс: имплантация ЭКС</h4>
+                                <p><strong>Сидоров А. А.</strong>, д.м.н., профессор</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-time">14:30</div>
+                            <div class="program-content">
+                                <h4>Разбор клинических случаев</h4>
+                                <p><strong>Козлова М. В.</strong>, к.м.н.</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-time">16:00</div>
+                            <div class="program-content">
+                                <h4>Круглый стол: современные протоколы</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СПИКЕРЫ С ПЕРЕКЛЮЧАТЕЛЕМ -->
+            <h2 class="section-title">Спикеры</h2>
+            <div class="speakers-grid" id="speakersGrid">
+                <!-- Ключевые спикеры -->
+                <div class="speaker-card">
+                    <div class="speaker-avatar">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=200&q=80"
+                            alt="Иванов Иван">
+                    </div>
+                    <div class="speaker-info">
+                        <div class="speaker-name">Иван Иванов</div>
+                        <div class="speaker-desc">д.м.н., профессор, зав. отделением аритмологии НМИЦ Кардиологии. Автор
+                            более 200 публикаций.</div>
+                    </div>
+                </div>
+                <div class="speaker-card">
+                    <div class="speaker-avatar">
+                        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=200&q=80"
+                            alt="Марина Сергеева">
+                    </div>
+                    <div class="speaker-info">
+                        <div class="speaker-name">Марина Сергеева</div>
+                        <div class="speaker-desc">к.м.н., главный внештатный кардиолог Поволжья. Эксперт по сложным
+                            нарушениям ритма.</div>
+                    </div>
+                </div>
+                <div class="speaker-card">
+                    <div class="speaker-avatar">
+                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80"
+                            alt="Алексей Петров">
+                    </div>
+                    <div class="speaker-info">
+                        <div class="speaker-name">Алексей Петров</div>
+                        <div class="speaker-desc">д.м.н., член-корреспондент РАН, руководитель центра роботизированной
+                            хирургии.</div>
+                    </div>
+                </div>
+
+                <!-- Скрытая часть -->
+                <div class="extra-speakers" id="extraSpeakers">
+                    <div class="speaker-card">
+                        <div class="speaker-avatar">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80"
+                                alt="Елена Кузнецова">
+                        </div>
+                        <div class="speaker-info">
+                            <div class="speaker-name">Елена Кузнецова</div>
+                            <div class="speaker-desc">Доцент кафедры кардиологии, эксперт по УЗИ-диагностике в
+                                рентгенхирургии.</div>
+                        </div>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-avatar">
+                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=200&q=80"
+                                alt="Дмитрий Волков">
+                        </div>
+                        <div class="speaker-info">
+                            <div class="speaker-name">Дмитрий Волков</div>
+                            <div class="speaker-desc">Врач высшей категории, хирург. Специализация — эндоваскулярное
+                                лечение ИБС.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="show-all-btn" id="toggleSpeakers" onclick="toggleSpeakers()">Показать всех спикеров
+                (12)</button>
+        </main>
+
+        <!-- ПРАВАЯ ЧАСТЬ (САЙДБАР) -->
+        <aside class="sidebar">
+            <div class="action-card">
+                <div class="info-row">
+                    <span class="info-label">Когда</span>
+                    <div class="info-value">15 мая 2026, 09:00</div>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Где</span>
+                    <div class="info-value">
+                        <a href="https://yandex.ru/maps/?text=Казань, ул. Ершова, 1А, ГТРК «Корстон»" target="_blank">
+                            Казань, ул. Ершова, 1А, <br>ГТРК «Корстон»
+                        </a>
+                        <span class="map-label">Яндекс Карты</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Участие</span>
+                    <div class="info-value">Бесплатно</div>
+                </div>
+
+                <!-- ДВЕ КНОПКИ ДЕЙСТВИЯ -->
+                <button class="btn btn-reg">Зарегистрироваться очно</button>
+                <button class="btn btn-online">Смотреть трансляцию</button>
+
+                <div class="btn-print" onclick="window.print()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Сохранить программу (PDF)</span>
+                </div>
+
+                <div class="organizer">
+                    Организатор: Российское кардиологическое общество (РКО)
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        function toggleSpeakers() {
+            const extra = document.getElementById('extraSpeakers');
+            const btn = document.getElementById('toggleSpeakers');
+
+            if (extra.classList.contains('active')) {
+                extra.classList.remove('active');
+                btn.innerText = 'Показать всех спикеров (12)';
+            } else {
+                extra.classList.add('active');
+                btn.innerText = 'Скрыть часть спикеров';
+            }
+        }
+    </script>
+
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <!-- Колонка 1: Бренд -->
+                <div class="footer-brand">
+                    <h2>ТАРГЕТ МЕДИКАЛ</h2>
+                    <p>Образовательная платформа для врачей рентгенэндоваскулярной диагностики и терапии.</p>
+                </div>
+
+                <!-- Колонка 2: Разделы -->
+                <div class="footer-col">
+                    <h4>Разделы</h4>
+                    <ul class="footer-list">
+                        <li><a href="index.html">Календарь</a></li>
+                        <li><a href="jurnal.html">Журнал</a></li>
+                        <li><a href="clinrec.html">Клинреки</a></li>
+                        <li><a href="#">О проекте</a></li>
+                    </ul>
+                </div>
+
+                <!-- Колонка 3: Связь -->
+                <div class="footer-col">
+                    <h4>Связь</h4>
+                    <div class="footer-contact-item">
+                        <span class="footer-label">Почта</span>
+                        <a href="mailto:info@target-medical.ru" class="footer-contact-link">info@target-medical.ru</a>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-label">Телефон</span>
+                        <a href="tel:+74950000000" class="footer-contact-link">+7 495 000-00-00</a>
+                    </div>
+                </div>
+
+                <!-- Колонка 4: Соцсети -->
+                <div class="footer-col">
+                    <h4>Мы в сети</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">ВКонтакте</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026, Таргет Медикал</p>
+                <div class="footer-bottom-links">
+                    <a href="#" class="footer-bottom-link">Правовая информация</a>
+                    <a href="#" class="footer-bottom-link">Политика данных</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

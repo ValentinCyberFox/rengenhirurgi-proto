@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ru" style="scrollbar-gutter: stable;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Клинические рекомендации | Рентгенхирурги</title>
+    <style>
+        /* === ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ === */
+        :root {
+            --blue: #0056b3;
+            --blue-hover: #004494;
+            --black: #111;
+            --gray-dark: #666;
+            --gray-light: #f5f5f5;
+            --border: #e0e0e0;
+            --green: #2e7d32;
+            --orange: #e65100;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--black);
+            line-height: 1.4;
+            background: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === ШАПКА === */
+        header {
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .header-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: var(--blue);
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue);
+        }
+
+        .nav-links a.active {
+            color: var(--blue);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* === ОСНОВНОЙ КОНТЕЙНЕР === */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* === ЯДРО: ШАПКА РАЗДЕЛА И ПОИСК === */
+        .page-header {
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: var(--gray-dark);
+            max-width: 600px;
+        }
+
+        .search-block {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #fff;
+            padding: 20px 0 30px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .search-input {
+            width: 100%;
+            font-size: 18px;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            border-color: var(--blue);
+        }
+
+        /* === ФИЛЬТРЫ: ПРАВИЛО ВНУТРЕННЕГО И ВНЕШНЕГО === */
+        .search-filters {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-divider {
+            width: 1px;
+            height: 20px;
+            background-color: var(--border);
+        }
+
+        .chip {
+            background: var(--gray-light);
+            border: 1px solid transparent;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--black);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .chip:hover {
+            background: #e8e8e8;
+        }
+
+        .chip.active {
+            background: var(--blue);
+            color: #fff;
+            border-color: var(--blue);
+        }
+
+        /* === РЕЕСТР (ТАБЛИЧНЫЙ СПИСОК) === */
+        .registry {
+            border-top: 1px solid var(--border);
+        }
+
+        .cr-row {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.1s;
+            animation: fadeIn 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cr-row:hover {
+            background-color: #fafafa;
+        }
+
+        .cr-participants {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .cr-row.expanded .cr-participants {
+            display: block;
+        }
+
+        .cr-participants-label {
+            font-size: 12px;
+            color: var(--gray-dark);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .cr-participants-list {
+            font-size: 13px;
+            color: var(--black);
+            line-height: 1.5;
+        }
+
+        .cr-participants-list li {
+            margin-bottom: 4px;
+            list-style: none;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .cr-participants-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--blue);
+        }
+
+        .cr-icd {
+            width: 120px;
+            flex-shrink: 0;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--gray-dark);
+            background: var(--gray-light);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            text-align: center;
+            margin-right: 20px;
+        }
+
+        .cr-main {
+            flex-grow: 1;
+            padding-right: 20px;
+        }
+
+        .cr-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--black);
+        }
+
+        .cr-meta {
+            font-size: 13px;
+            color: var(--gray-dark);
+        }
+
+        .cr-meta span {
+            margin-right: 12px;
+        }
+
+        .cr-status {
+            display: none;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-right: 12px;
+        }
+
+        .badge-green {
+            color: var(--green);
+        }
+
+        .badge-yellow {
+            color: var(--orange);
+        }
+
+        .badge-gray {
+            color: var(--gray-dark);
+        }
+
+        .cr-action {
+            width: 140px;
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background: var(--gray-light);
+            color: var(--blue);
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        .btn-download:hover {
+            background: #e0e0e0;
+        }
+
+        .dl-text {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .dl-meta {
+            font-size: 11px;
+            color: var(--gray-dark);
+            margin-top: 2px;
+        }
+
+        /* === КНОПКА ПОКАЗАТЬ ЕЩЕ === */
+        .load-more-container {
+            text-align: center;
+            padding: 30px 0;
+            display: none;
+            /* Скрыта по умолчанию */
+        }
+
+        .btn-load-more {
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--black);
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-load-more:hover {
+            border-color: var(--gray-dark);
+            background: var(--gray-light);
+        }
+
+        /* Пустое состояние */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            display: none;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: var(--gray-dark);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .btn-reset {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .btn-reset:hover {
+            background: var(--gray-light);
+        }
+
+        /* === ФУТЕР === */
+        .main-footer {
+            background: #fff;
+            border-top: 1px solid var(--border);
+            padding: 80px 0 60px;
+            margin-top: 100px;
+        }
+
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand h2 {
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--gray-dark);
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-size: 11px;
+            font-weight: 700;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .footer-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-list a {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--black);
+            transition: color 0.2s;
+        }
+
+        .footer-list a:hover {
+            color: var(--blue);
+        }
+
+        .footer-contact-item {
+            margin-bottom: 20px;
+        }
+
+        .footer-label {
+            display: block;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .footer-contact-link {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-bottom-link:hover {
+            color: var(--black);
+        }
+
+        /* === АДАПТИВНОСТЬ === */
+        @media (max-width: 768px) {
+            .search-filters {
+                gap: 16px;
+            }
+
+            .filter-divider {
+                display: none;
+            }
+
+            .cr-row {
+                flex-direction: column;
+                align-items: flex-start;
+                position: relative;
+                padding: 16px 0;
+            }
+
+            .cr-icd {
+                margin-bottom: 8px;
+                font-size: 12px;
+                padding: 2px 6px;
+            }
+
+            .cr-main {
+                padding-right: 0;
+                margin-bottom: 12px;
+            }
+
+            .cr-status {
+                position: absolute;
+                top: 16px;
+                right: 0;
+                margin-right: 0;
+                text-align: right;
+            }
+
+            .cr-action {
+                width: 100%;
+                text-align: left;
+            }
+
+            .btn-download {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 12px 16px;
+                background: #f8f9fa;
+                border: 1px solid var(--border);
+            }
+
+            .dl-meta {
+                margin-top: 0;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .btn-load-more {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ШАПКА -->
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="logo">Рентгенхирурги</a>
+            <div class="nav-links">
+                <a href="index.html">Мероприятия</a>
+                <a href="jurnal.html">Журнал</a>
+                <a href="clinrec.html" class="active">Клинреки</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Клинические рекомендации</h1>
+            <p>Актуальные документы, утвержденные Минздравом РФ и профильными ассоциациями. Поиск по нозологии или коду
+                МКБ-10.</p>
+        </div>
+
+        <div class="search-block">
+            <input type="text" id="searchInput" class="search-input"
+                placeholder="Введите название болезни или код МКБ (например, I20)">
+
+            <div class="search-filters">
+                <div class="filter-group" id="categoryChips">
+                    <button class="chip active" data-group="category" data-val="all">Все направления</button>
+                    <button class="chip" data-group="category" data-val="cardio">Кардиология</button>
+                    <button class="chip" data-group="category" data-val="neuro">Неврология</button>
+                </div>
+                <div class="filter-divider"></div>
+                <div class="filter-group" id="statusChips">
+                    <button class="chip active" data-group="status" data-val="all">Любой статус</button>
+                    <button class="chip" data-group="status" data-val="Действует">Действующие</button>
+                    <button class="chip" data-group="status" data-val="Проект">Проекты</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="registry" id="registryList">
+            <!-- Элементы будут сгенерированы через JS -->
+        </div>
+
+        <!-- КНОПКА ПОКАЗАТЬ ЕЩЕ -->
+        <div class="load-more-container" id="loadMoreContainer">
+            <button class="btn-load-more" onclick="loadMore()">
+                Показать еще <span id="loadMoreCount" style="color: var(--gray-dark);"></span>
+            </button>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+            <h3>Ничего не найдено</h3>
+            <p>Документов с выбранными фильтрами не нашлось.</p>
+            <button class="btn-reset" onclick="resetFilters()">Сбросить фильтры</button>
+        </div>
+
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <!-- Колонка 1: Бренд -->
+                <div class="footer-brand">
+                    <h2>ТАРГЕТ МЕДИКАЛ</h2>
+                    <p>Образовательная платформа для врачей рентгенэндоваскулярной диагностики и терапии.</p>
+                </div>
+
+                <!-- Колонка 2: Разделы -->
+                <div class="footer-col">
+                    <h4>Разделы</h4>
+                    <ul class="footer-list">
+                        <li><a href="index.html">Календарь</a></li>
+                        <li><a href="jurnal.html">Журнал</a></li>
+                        <li><a href="clinrec.html">Клинреки</a></li>
+                        <li><a href="#">О проекте</a></li>
+                    </ul>
+                </div>
+
+                <!-- Колонка 3: Связь -->
+                <div class="footer-col">
+                    <h4>Связь</h4>
+                    <div class="footer-contact-item">
+                        <span class="footer-label">Почта</span>
+                        <a href="mailto:info@target-medical.ru" class="footer-contact-link">info@target-medical.ru</a>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-label">Телефон</span>
+                        <a href="tel:+74950000000" class="footer-contact-link">+7 495 000-00-00</a>
+                    </div>
+                </div>
+
+                <!-- Колонка 4: Соцсети -->
+                <div class="footer-col">
+                    <h4>Мы в сети</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">ВКонтакте</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026, Таргет Медикал</p>
+                <div class="footer-bottom-links">
+                    <a href="#" class="footer-bottom-link">Правовая информация</a>
+                    <a href="#" class="footer-bottom-link">Политика данных</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Искусственно расширенная база данных для демонстрации кнопки "Показать еще"
+        const documents = [
+            { title: "Инфекционный эндокардит и инфекция внутрисердечных устройств", icd: "I33, I39", developer: "РХО", placementDate: "15.03.2024", status: "Действует", size: "PDF, 5.2 МБ", categories: ["cardio"], participants: ["РХО", "АССХР", "РНМОТ", "ВНОЭМПХ", "РОЯМ", "РОССКЭАиК"] },
+            { title: "Острый инфаркт миокарда с подъемом сегмента ST", icd: "I21, I22", developer: "РХО", placementDate: "10.01.2020", status: "Действует", size: "PDF, 3.2 МБ", categories: ["cardio"], participants: ["РХО", "РОАС"] },
+            { title: "Острый коронарный синдром без подъема сегмента ST", icd: "I20.0, I21.4", developer: "РХО", placementDate: "10.01.2020", status: "Действует", size: "PDF, 2.8 МБ", categories: ["cardio"], participants: ["РХО"] },
+            { title: "Ишемический инсульт и транзиторная ишемическая атака", icd: "I63, G45", developer: "ВНОН", placementDate: "20.05.2021", status: "Действует", size: "PDF, 4.1 МБ", categories: ["neuro"], participants: ["ВНОН", "РХО", "РОАС"] },
+            { title: "Аневризма брюшной аорты", icd: "I71.3, I71.4", developer: "РОАС", placementDate: "01.02.2024", status: "Проект", size: "PDF, 1.5 МБ", categories: ["cardio"], participants: ["РОАС", "РХО"] },
+            { title: "Стеноз сонных артерий", icd: "I65.2", developer: "РОАС", placementDate: "15.09.2018", status: "Архив", size: "PDF, 1.1 МБ", categories: ["neuro", "cardio"], participants: ["РОАС"] },
+            { title: "Врожденные пороки сердца у взрослых", icd: "Q20-Q28", developer: "РКО", placementDate: "10.11.2022", status: "Действует", size: "PDF, 5.0 МБ", categories: ["cardio"], participants: ["РКО", "РХО"] },
+            { title: "Тромбоэмболия легочной артерии", icd: "I26", developer: "РХО", placementDate: "05.08.2023", status: "Проект", size: "PDF, 2.1 МБ", categories: ["cardio"], participants: ["РХО"] },
+            { title: "Артериовенозные мальформации головного мозга", icd: "Q28.2", developer: "ВНОН", placementDate: "20.03.2019", status: "Действует", size: "PDF, 3.7 МБ", categories: ["neuro"], participants: ["ВНОН"] },
+            { title: "Заболевания периферических артерий", icd: "I73", developer: "РОАС", placementDate: "15.06.2021", status: "Действует", size: "PDF, 4.5 МБ", categories: ["cardio"], participants: ["РОАС", "РХО"] },
+            { title: "Аневризмы сосудов головного мозга (не разорвавшиеся)", icd: "I67.1", developer: "ВНОН", placementDate: "10.09.2022", status: "Действует", size: "PDF, 2.9 МБ", categories: ["neuro"], participants: ["ВНОН", "РОАС"] },
+            { title: "Хроническая ишемия нижних конечностей", icd: "I70.2", developer: "РОАС", placementDate: "20.01.2020", status: "Архив", size: "PDF, 1.8 МБ", categories: ["cardio"], participants: ["РОАС"] },
+            { title: "Острая ишемия конечности", icd: "I74", developer: "РОАС", placementDate: "01.03.2024", status: "Проект", size: "PDF, 1.2 МБ", categories: ["cardio"], participants: ["РОАС", "РХО"] }
+        ];
+
+        // Настройки пагинации
+        const ITEMS_PER_PAGE = 5;
+        let currentPage = 1;
+        let currentFilteredDocs = [];
+
+        const listContainer = document.getElementById('registryList');
+        const searchInput = document.getElementById('searchInput');
+        const chips = document.querySelectorAll('.chip');
+        const emptyState = document.getElementById('emptyState');
+        const loadMoreContainer = document.getElementById('loadMoreContainer');
+        const loadMoreCountSpan = document.getElementById('loadMoreCount');
+
+        let currentSearch = '';
+        let currentCategory = 'all';
+        let currentStatus = 'all';
+
+        function getBadgeClass(status) {
+            if (status === 'Действует') return 'badge-green';
+            if (status === 'Проект') return 'badge-yellow';
+            return 'badge-gray';
+        }
+
+        // Функция отрисовки (reset = true очищает список и возвращает на 1 страницу)
+        function renderList(reset = true) {
+            if (reset) {
+                currentPage = 1;
+                listContainer.innerHTML = '';
+            }
+
+            // 1. Применяем все фильтры к базе
+            currentFilteredDocs = documents.filter(doc => {
+                const matchSearch = doc.title.toLowerCase().includes(currentSearch) ||
+                    doc.icd.toLowerCase().includes(currentSearch);
+                const matchCategory = currentCategory === 'all' || doc.categories.includes(currentCategory);
+                const matchStatus = currentStatus === 'all' || doc.status === currentStatus;
+
+                return matchSearch && matchCategory && matchStatus;
+            });
+
+            // 2. Проверка на пустоту
+            if (currentFilteredDocs.length === 0) {
+                emptyState.style.display = 'block';
+                loadMoreContainer.style.display = 'none';
+                return;
+            } else {
+                emptyState.style.display = 'none';
+            }
+
+            // 3. Вычисляем срез для текущей страницы
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const endIndex = startIndex + ITEMS_PER_PAGE;
+            const docsToShow = currentFilteredDocs.slice(startIndex, endIndex);
+
+            // 4. Отрисовываем срез
+            docsToShow.forEach(doc => {
+                const row = document.createElement('div');
+                row.className = 'cr-row';
+                const hasParticipants = doc.participants && doc.participants.length > 1;
+                const participantsList = hasParticipants ? doc.participants.map(p => `<li>${p}</li>`).join('') : '';
+
+                row.innerHTML = `
+                    <div class="cr-icd">${doc.icd}</div>
+                    <div class="cr-main">
+                        <h3 class="cr-title">${doc.title}</h3>
+                        <div class="cr-meta">
+                            <span class="badge ${getBadgeClass(doc.status)}">${doc.status}</span>
+                            <span>Разработчик: ${doc.developer}${hasParticipants ? ` (+${doc.participants.length - 1})` : ''}</span>
+                            <span>Размещено: ${doc.placementDate}</span>
+                        </div>
+                        ${hasParticipants ? `
+                            <div class="cr-participants">
+                                <div class="cr-participants-label">При участии:</div>
+                                <ul class="cr-participants-list">${participantsList}</ul>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="cr-action">
+                        <a href="#" class="btn-download" onclick="event.stopPropagation()">
+                            <span class="dl-text">Скачать</span>
+                            <span class="dl-meta">${doc.size}</span>
+                        </a>
+                    </div>
+                `;
+
+                if (hasParticipants) {
+                    row.addEventListener('click', () => {
+                        row.classList.toggle('expanded');
+                    });
+                }
+
+                listContainer.appendChild(row);
+            });
+
+            // 5. Логика кнопки "Показать еще"
+            if (endIndex < currentFilteredDocs.length) {
+                loadMoreContainer.style.display = 'block';
+                const remaining = currentFilteredDocs.length - endIndex;
+                const nextBatch = remaining > ITEMS_PER_PAGE ? ITEMS_PER_PAGE : remaining;
+                loadMoreCountSpan.innerText = `(${nextBatch})`;
+            } else {
+                loadMoreContainer.style.display = 'none';
+            }
+        }
+
+        // Обработчик кнопки "Показать еще"
+        function loadMore() {
+            currentPage++;
+            renderList(false);
+        }
+
+        // Слушатель ввода текста
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value.toLowerCase().trim();
+            renderList(true);
+        });
+
+        // Слушатели чипсов (тегов)
+        chips.forEach(chip => {
+            chip.addEventListener('click', (e) => {
+                const group = e.target.getAttribute('data-group');
+                const val = e.target.getAttribute('data-val');
+
+                document.querySelectorAll(`.chip[data-group="${group}"]`).forEach(c => c.classList.remove('active'));
+                e.target.classList.add('active');
+
+                if (group === 'category') currentCategory = val;
+                else if (group === 'status') currentStatus = val;
+
+                renderList(true);
+            });
+        });
+
+        // Сброс фильтров
+        function resetFilters() {
+            searchInput.value = '';
+            currentSearch = '';
+            currentCategory = 'all';
+            currentStatus = 'all';
+
+            chips.forEach(c => c.classList.remove('active'));
+            document.querySelector('.chip[data-group="category"][data-val="all"]').classList.add('active');
+            document.querySelector('.chip[data-group="status"][data-val="all"]').classList.add('active');
+
+            renderList(true);
+        }
+
+        // Первичный рендер при загрузке
+        renderList(true);
+    </script>
+</body>
+
+</html>
