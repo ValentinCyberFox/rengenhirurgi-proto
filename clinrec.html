@@ -178,8 +178,8 @@
 
         .cr-row {
             display: flex;
-            align-items: center;
-            padding: 20px 0;
+            align-items: flex-start; /* Привязка к верхнему краю (базовой линии) */
+            padding: 24px 0;
             border-bottom: 1px solid var(--border);
             transition: background-color 0.1s;
             animation: fadeIn 0.3s ease-in-out;
@@ -205,8 +205,9 @@
         .cr-participants {
             display: none;
             margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
+            padding-left: 0;
+            border-top: 1px solid #eee; /* Тонкая разделительная линия */
+            padding-top: 20px;
         }
 
         .cr-row.expanded .cr-participants {
@@ -214,44 +215,51 @@
         }
 
         .cr-participants-label {
-            font-size: 12px;
-            color: var(--gray-dark);
-            margin-bottom: 8px;
-            font-weight: 600;
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .cr-participants-list {
-            font-size: 13px;
-            color: var(--black);
-            line-height: 1.5;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
         }
 
-        .cr-participants-list li {
-            margin-bottom: 4px;
-            list-style: none;
-            position: relative;
-            padding-left: 16px;
-        }
-
-        .cr-participants-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--blue);
+        .cr-participants-list div {
+            font-size: 14px;
+            color: var(--gray-dark);
+            line-height: 1.4;
+            max-width: 800px;
         }
 
         .cr-icd {
-            width: 120px;
+            width: 100px;
             flex-shrink: 0;
             font-family: var(--font-mono);
-            font-size: 14px;
+            font-size: 13px;
             color: var(--gray-dark);
             background: var(--gray-light);
             padding: 4px 8px;
             border-radius: 4px;
-            display: inline-block;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
             text-align: center;
-            margin-right: 20px;
+            margin-right: 32px;
+        }
+
+        .cr-icd span {
+            display: block;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 2px;
+        }
+
+        .cr-icd span:last-child {
+            border-bottom: none;
         }
 
         .cr-main {
@@ -260,24 +268,39 @@
         }
 
         .cr-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 6px;
+            font-size: 18px;
+            font-weight: 600; /* Уменьшили жирность для легкости */
+            margin-bottom: 8px;
             color: var(--black);
+            line-height: 1.2;
+        }
+
+        .title-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-dark);
+            background: var(--gray-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .cr-meta {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--gray-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .cr-meta span {
-            margin-right: 12px;
+        .cr-meta .dot {
+            color: #ccc;
         }
 
-        .cr-status {
-            display: none;
-        }
+        .status-active { color: #43a047; font-weight: 600; } /* Мягкий зеленый */
+        .status-project { color: var(--orange); font-weight: 600; }
+        .status-archive { color: #999; }
 
         .badge {
             display: inline-block;
@@ -299,27 +322,73 @@
         }
 
         .cr-action {
-            width: 140px;
+            width: 180px; /* Совпадает с шириной кнопки */
             flex-shrink: 0;
-            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Центрируем всё внутри колонки */
+            gap: 4px;
         }
 
         .btn-download {
             display: inline-flex;
-            flex-direction: column;
+            flex-direction: column; /* Элементы в колонку внутри кнопки */
             align-items: center;
             justify-content: center;
+            gap: 2px;
             text-decoration: none;
             background: var(--gray-light);
             color: var(--blue);
-            padding: 8px 16px;
+            padding: 8px 20px;
             border-radius: 6px;
-            transition: background 0.2s;
-            width: 100%;
+            transition: all 0.2s;
+            width: 180px;
+            height: 52px; /* Чуть увеличили высоту, чтобы вместить текст и размер */
+            border: 1px solid transparent;
+            flex-shrink: 0;
+        }
+
+        .btn-inner-top {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dl-meta-inside {
+            font-size: 10px;
+            color: var(--gray-dark);
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .btn-download:hover .dl-meta-inside {
+            color: var(--blue);
         }
 
         .btn-download:hover {
-            background: #e0e0e0;
+            background: #fff;
+            border-color: var(--blue);
+            box-shadow: 0 2px 8px rgba(0,86,179,0.1);
+        }
+
+        .btn-download svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+        }
+
+        .cr-participants-toggle {
+            font-size: 12px;
+            color: var(--blue);
+            font-weight: 600;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .expanded .cr-participants-toggle {
+            display: none;
         }
 
         .dl-text {
@@ -329,8 +398,8 @@
 
         .dl-meta {
             font-size: 11px;
-            color: var(--gray-dark);
-            margin-top: 2px;
+            color: #999;
+            text-align: center;
         }
 
         /* === КНОПКА ПОКАЗАТЬ ЕЩЕ === */
@@ -585,16 +654,21 @@
                 placeholder="Введите название болезни или код МКБ (например, I20)">
 
             <div class="search-filters">
-                <div class="filter-group" id="categoryChips">
-                    <button class="chip active" data-group="category" data-val="all">Все направления</button>
-                    <button class="chip" data-group="category" data-val="cardio">Кардиология</button>
-                    <button class="chip" data-group="category" data-val="neuro">Неврология</button>
-                </div>
-                <div class="filter-divider"></div>
+                <!-- Группа 1: Статус -->
                 <div class="filter-group" id="statusChips">
-                    <button class="chip active" data-group="status" data-val="all">Любой статус</button>
+                    <button class="chip active" data-group="status" data-val="all">Все статусы</button>
                     <button class="chip" data-group="status" data-val="Действует">Действующие</button>
                     <button class="chip" data-group="status" data-val="Проект">Проекты</button>
+                    <button class="chip" data-group="status" data-val="Архив">Архив</button>
+                </div>
+                
+                <div class="filter-divider"></div>
+
+                <!-- Группа 2: Возраст -->
+                <div class="filter-group" id="ageChips">
+                    <button class="chip active" data-group="age" data-val="all">Все возрасты</button>
+                    <button class="chip" data-group="age" data-val="Взрослые">Взрослые</button>
+                    <button class="chip" data-group="age" data-val="Дети">Дети</button>
                 </div>
             </div>
         </div>
@@ -673,25 +747,38 @@
     </footer>
 
     <script>
-        // Искусственно расширенная база данных для демонстрации кнопки "Показать еще"
+        // Обновленная база данных в соответствии с новым ТЗ
         const documents = [
-            { title: "Инфекционный эндокардит и инфекция внутрисердечных устройств", icd: "I33, I39", developer: "РХО", placementDate: "15.03.2024", status: "Действует", size: "PDF, 5.2 МБ", categories: ["cardio"], participants: ["РХО", "АССХР", "РНМОТ", "ВНОЭМПХ", "РОЯМ", "РОССКЭАиК"] },
-            { title: "Острый инфаркт миокарда с подъемом сегмента ST", icd: "I21, I22", developer: "РХО", placementDate: "10.01.2020", status: "Действует", size: "PDF, 3.2 МБ", categories: ["cardio"], participants: ["РХО", "РОАС"] },
-            { title: "Острый коронарный синдром без подъема сегмента ST", icd: "I20.0, I21.4", developer: "РХО", placementDate: "10.01.2020", status: "Действует", size: "PDF, 2.8 МБ", categories: ["cardio"], participants: ["РХО"] },
-            { title: "Ишемический инсульт и транзиторная ишемическая атака", icd: "I63, G45", developer: "ВНОН", placementDate: "20.05.2021", status: "Действует", size: "PDF, 4.1 МБ", categories: ["neuro"], participants: ["ВНОН", "РХО", "РОАС"] },
-            { title: "Аневризма брюшной аорты", icd: "I71.3, I71.4", developer: "РОАС", placementDate: "01.02.2024", status: "Проект", size: "PDF, 1.5 МБ", categories: ["cardio"], participants: ["РОАС", "РХО"] },
-            { title: "Стеноз сонных артерий", icd: "I65.2", developer: "РОАС", placementDate: "15.09.2018", status: "Архив", size: "PDF, 1.1 МБ", categories: ["neuro", "cardio"], participants: ["РОАС"] },
-            { title: "Врожденные пороки сердца у взрослых", icd: "Q20-Q28", developer: "РКО", placementDate: "10.11.2022", status: "Действует", size: "PDF, 5.0 МБ", categories: ["cardio"], participants: ["РКО", "РХО"] },
-            { title: "Тромбоэмболия легочной артерии", icd: "I26", developer: "РХО", placementDate: "05.08.2023", status: "Проект", size: "PDF, 2.1 МБ", categories: ["cardio"], participants: ["РХО"] },
-            { title: "Артериовенозные мальформации головного мозга", icd: "Q28.2", developer: "ВНОН", placementDate: "20.03.2019", status: "Действует", size: "PDF, 3.7 МБ", categories: ["neuro"], participants: ["ВНОН"] },
-            { title: "Заболевания периферических артерий", icd: "I73", developer: "РОАС", placementDate: "15.06.2021", status: "Действует", size: "PDF, 4.5 МБ", categories: ["cardio"], participants: ["РОАС", "РХО"] },
-            { title: "Аневризмы сосудов головного мозга (не разорвавшиеся)", icd: "I67.1", developer: "ВНОН", placementDate: "10.09.2022", status: "Действует", size: "PDF, 2.9 МБ", categories: ["neuro"], participants: ["ВНОН", "РОАС"] },
-            { title: "Хроническая ишемия нижних конечностей", icd: "I70.2", developer: "РОАС", placementDate: "20.01.2020", status: "Архив", size: "PDF, 1.8 МБ", categories: ["cardio"], participants: ["РОАС"] },
-            { title: "Острая ишемия конечности", icd: "I74", developer: "РОАС", placementDate: "01.03.2024", status: "Проект", size: "PDF, 1.2 МБ", categories: ["cardio"], participants: ["РОАС", "РХО"] }
+            { 
+                title: "Инфекционный эндокардит и инфекция внутрисердечных устройств", 
+                icd: ["I33", "I39"], 
+                developer: "РХО", 
+                placementDate: "2024-03-15", 
+                status: "Действует", 
+                fileType: "pdf", 
+                fileSize: "5.2 МБ", 
+                ageGroup: "Взрослые", 
+                participants: [
+                    "Общероссийская общественная организация «Российское кардиологическое общество»",
+                    "Ассоциация сердечно-сосудистых хирургов России",
+                    "Общероссийская общественная организация «Российское научное медицинское общество терапевтов»",
+                    "Всероссийское научно-практическое общество эпидемиологов, микробиологов и паразитологов",
+                    "Межрегиональная ассоциация по клинической микробиологии и антимикробной химиотерапии",
+                    "Российское общество ядерной медицины",
+                    "Всероссийское научное общество специалистов по клинической электрофизиологии, аритмологии и кардиостимуляции"
+                ] 
+            },
+            { title: "Острый инфаркт миокарда с подъемом сегмента ST", icd: ["I21", "I22"], developer: "РХО", placementDate: "2020-01-10", status: "Действует", fileType: "pdf", fileSize: "3.2 МБ", ageGroup: "Взрослые", participants: ["РОАС"] },
+            { title: "Ишемический инсульт и транзиторная ишемическая атака", icd: ["I63", "G45"], developer: "ВНОН", placementDate: "2021-05-20", status: "Действует", fileType: "pdf", fileSize: "4.1 МБ", ageGroup: "Взрослые", participants: ["РХО", "РОАС"] },
+            { title: "Аневризма брюшной аорты", icd: ["I71.3", "I71.4"], developer: "РОАС", placementDate: "2024-02-01", status: "Проект", fileType: "docx", fileSize: "1.5 МБ", ageGroup: "Взрослые", participants: ["РХО"] },
+            { title: "Стеноз сонных артерий", icd: ["I65.2"], developer: "РОАС", placementDate: "2018-09-15", status: "Архив", fileType: "link", url: "https://minzdrav.gov.ru", ageGroup: "Взрослые", participants: [] },
+            { title: "Врожденные пороки сердца у взрослых", icd: ["Q20-Q28"], developer: "РКО", placementDate: "2022-11-10", status: "Действует", fileType: "pdf", fileSize: "5.0 МБ", ageGroup: "Взрослые", participants: ["РХО"] },
+            { title: "Сердечная недостаточность у детей", icd: ["I50"], developer: "РКО", placementDate: "2024-04-01", status: "Проект", fileType: "pdf", fileSize: "2.1 МБ", ageGroup: "Дети", participants: ["РХО"] },
+            { title: "Острая ишемия конечности", icd: ["I74"], developer: "РОАС", placementDate: "2024-03-01", status: "Проект", fileType: "docx", fileSize: "1.2 МБ", ageGroup: "Взрослые", participants: ["РХО"] }
         ];
 
         // Настройки пагинации
-        const ITEMS_PER_PAGE = 5;
+        const ITEMS_PER_PAGE = 8;
         let currentPage = 1;
         let currentFilteredDocs = [];
 
@@ -703,33 +790,59 @@
         const loadMoreCountSpan = document.getElementById('loadMoreCount');
 
         let currentSearch = '';
-        let currentCategory = 'all';
+        let currentAge = 'all';
         let currentStatus = 'all';
 
-        function getBadgeClass(status) {
-            if (status === 'Действует') return 'badge-green';
-            if (status === 'Проект') return 'badge-yellow';
-            return 'badge-gray';
+        // Форматирование даты по-русски
+        function formatDateRus(dateStr) {
+            const date = new Date(dateStr);
+            const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+            return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
         }
 
-        // Функция отрисовки (reset = true очищает список и возвращает на 1 страницу)
+        function getStatusInfo(status) {
+            const map = {
+                'Действует': { class: 'status-active', label: 'Действует' },
+                'Проект': { class: 'status-project', label: 'Проект' },
+                'Архив': { class: 'status-archive', label: 'Архив' }
+            };
+            return map[status] || { class: '', label: status };
+        }
+
+        function getButtonInfo(doc) {
+            if (doc.fileType === 'pdf') {
+                return { 
+                    text: 'Скачать PDF', 
+                    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>' 
+                };
+            }
+            if (doc.fileType === 'docx') {
+                return { 
+                    text: 'Скачать DOCX', 
+                    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>' 
+                };
+            }
+            return { 
+                text: 'Открыть на сайте', 
+                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>' 
+            };
+        }
+
         function renderList(reset = true) {
             if (reset) {
                 currentPage = 1;
                 listContainer.innerHTML = '';
             }
 
-            // 1. Применяем все фильтры к базе
             currentFilteredDocs = documents.filter(doc => {
                 const matchSearch = doc.title.toLowerCase().includes(currentSearch) ||
-                    doc.icd.toLowerCase().includes(currentSearch);
-                const matchCategory = currentCategory === 'all' || doc.categories.includes(currentCategory);
+                    doc.icd.join(', ').toLowerCase().includes(currentSearch);
+                const matchAge = currentAge === 'all' || doc.ageGroup === currentAge;
                 const matchStatus = currentStatus === 'all' || doc.status === currentStatus;
 
-                return matchSearch && matchCategory && matchStatus;
+                return matchSearch && matchAge && matchStatus;
             });
 
-            // 2. Проверка на пустоту
             if (currentFilteredDocs.length === 0) {
                 emptyState.style.display = 'block';
                 loadMoreContainer.style.display = 'none';
@@ -738,38 +851,51 @@
                 emptyState.style.display = 'none';
             }
 
-            // 3. Вычисляем срез для текущей страницы
             const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
             const endIndex = startIndex + ITEMS_PER_PAGE;
             const docsToShow = currentFilteredDocs.slice(startIndex, endIndex);
 
-            // 4. Отрисовываем срез
             docsToShow.forEach(doc => {
                 const row = document.createElement('div');
                 row.className = 'cr-row';
-                const hasParticipants = doc.participants && doc.participants.length > 1;
-                const participantsList = hasParticipants ? doc.participants.map(p => `<li>${p}</li>`).join('') : '';
+                const statusInfo = getStatusInfo(doc.status);
+                const btnInfo = getButtonInfo(doc);
+
+                // Коды МКБ как массив спанов
+                const icdHtml = doc.icd.map(code => `<span>${code}</span>`).join('');
+                
+                // Список участников без лишнего декора
+                const hasParticipants = doc.participants && doc.participants.length > 0;
+                const participantsHtml = hasParticipants ? doc.participants.map(p => `<div>${p}</div>`).join('') : '';
 
                 row.innerHTML = `
-                    <div class="cr-icd">${doc.icd}</div>
+                    <div class="cr-icd">${icdHtml}</div>
                     <div class="cr-main">
                         <h3 class="cr-title">${doc.title}</h3>
                         <div class="cr-meta">
-                            <span class="badge ${getBadgeClass(doc.status)}">${doc.status}</span>
-                            <span>Разработчик: ${doc.developer}${hasParticipants ? ` (+${doc.participants.length - 1})` : ''}</span>
-                            <span>Размещено: ${doc.placementDate}</span>
+                            <span class="${statusInfo.class}">${statusInfo.label}</span>
+                            <span class="dot">•</span>
+                            <span class="title-tag">${doc.ageGroup}</span>
+                            <span class="dot">•</span>
+                            <span>${doc.developer}</span>
+                            <span class="dot">•</span>
+                            <span>${formatDateRus(doc.placementDate)}</span>
                         </div>
                         ${hasParticipants ? `
+                            <div class="cr-participants-toggle">При участии ${doc.participants.length} организаций ↓</div>
                             <div class="cr-participants">
-                                <div class="cr-participants-label">При участии:</div>
-                                <ul class="cr-participants-list">${participantsList}</ul>
+                                <div class="cr-participants-label">Организации-разработчики</div>
+                                <div class="cr-participants-list">${participantsHtml}</div>
                             </div>
                         ` : ''}
                     </div>
                     <div class="cr-action">
-                        <a href="#" class="btn-download" onclick="event.stopPropagation()">
-                            <span class="dl-text">Скачать</span>
-                            <span class="dl-meta">${doc.size}</span>
+                        <a href="${doc.url || '#'}" class="btn-download" target="_blank" onclick="event.stopPropagation()">
+                            <div class="btn-inner-top">
+                                ${btnInfo.icon}
+                                <span class="dl-text">${btnInfo.text}</span>
+                            </div>
+                            ${doc.fileSize ? `<span class="dl-meta-inside">${doc.fileSize}</span>` : ''}
                         </a>
                     </div>
                 `;
@@ -783,7 +909,6 @@
                 listContainer.appendChild(row);
             });
 
-            // 5. Логика кнопки "Показать еще"
             if (endIndex < currentFilteredDocs.length) {
                 loadMoreContainer.style.display = 'block';
                 const remaining = currentFilteredDocs.length - endIndex;
@@ -794,19 +919,16 @@
             }
         }
 
-        // Обработчик кнопки "Показать еще"
         function loadMore() {
             currentPage++;
             renderList(false);
         }
 
-        // Слушатель ввода текста
         searchInput.addEventListener('input', (e) => {
             currentSearch = e.target.value.toLowerCase().trim();
             renderList(true);
         });
 
-        // Слушатели чипсов (тегов)
         chips.forEach(chip => {
             chip.addEventListener('click', (e) => {
                 const group = e.target.getAttribute('data-group');
@@ -815,28 +937,26 @@
                 document.querySelectorAll(`.chip[data-group="${group}"]`).forEach(c => c.classList.remove('active'));
                 e.target.classList.add('active');
 
-                if (group === 'category') currentCategory = val;
+                if (group === 'age') currentAge = val;
                 else if (group === 'status') currentStatus = val;
 
                 renderList(true);
             });
         });
 
-        // Сброс фильтров
         function resetFilters() {
             searchInput.value = '';
             currentSearch = '';
-            currentCategory = 'all';
+            currentAge = 'all';
             currentStatus = 'all';
 
             chips.forEach(c => c.classList.remove('active'));
-            document.querySelector('.chip[data-group="category"][data-val="all"]').classList.add('active');
+            document.querySelector('.chip[data-group="age"][data-val="all"]').classList.add('active');
             document.querySelector('.chip[data-group="status"][data-val="all"]').classList.add('active');
 
             renderList(true);
         }
 
-        // Первичный рендер при загрузке
         renderList(true);
     </script>
 </body>
