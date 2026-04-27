@@ -41,6 +41,8 @@
         header {
             border-bottom: 1px solid var(--border);
             background: #fff;
+            position: relative;
+            z-index: 100;
         }
 
         .header-inner {
@@ -77,6 +79,42 @@
             color: var(--blue);
         }
 
+        /* Бургер-кнопка (по умолчанию скрыта) */
+        .burger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            width: 40px;
+            height: 40px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .burger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--black);
+            border-radius: 2px;
+            transition: transform 0.25s ease, opacity 0.2s ease;
+        }
+
+        .burger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .burger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
         .nav-back-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -99,16 +137,25 @@
             padding: 40px 40px;
             display: grid;
             grid-template-columns: 1fr 320px;
+            grid-template-areas:
+                "content sidebar"
+                "details sidebar";
             gap: 60px;
             align-items: start;
         }
 
-        .event-main {
+        .event-content-wrapper {
+            grid-area: content;
+            min-width: 0;
+        }
+
+        .event-details-wrapper {
+            grid-area: details;
             min-width: 0;
         }
 
         /* ОСНОВНОЙ КОНТЕНТ */
-        .event-main h1 {
+        .event-content-wrapper h1 {
             font-size: 42px;
             line-height: 1.1;
             margin: 0 0 32px 0;
@@ -339,6 +386,11 @@
             /* Ушли от больших скруглений к строгости */
         }
 
+        .action-card-top {
+            display: flex;
+            flex-direction: column;
+        }
+
         .info-label {
             display: none;
             /* Убираем метки-подписи */
@@ -368,6 +420,20 @@
 
         .map-link:hover {
             color: var(--blue);
+        }
+
+        .sidebar-actions-wrapper {
+            display: flex;
+            flex-direction: column;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .registration-note {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #6B7280;
         }
 
         .divider {
@@ -483,7 +549,8 @@
                 max-width: 100% !important;
             }
 
-            .event-main {
+            .event-content-wrapper,
+            .event-details-wrapper {
                 width: 100% !important;
             }
 
@@ -524,7 +591,7 @@
                 color: #000;
             }
 
-            .event-main h1 {
+            .event-content-wrapper h1 {
                 font-size: 26pt;
                 margin-top: 0;
                 line-height: 1.1;
@@ -532,7 +599,7 @@
             }
 
             /* Добавляем шапку для печати */
-            .event-main::before {
+            .event-content-wrapper::before {
                 content: "Рентгенхирурги | ПРОГРАММА МЕРОПРИЯТИЯ";
                 display: block;
                 font-size: 10pt;
@@ -670,6 +737,126 @@
             color: #999;
         }
 
+        /* === ФУТЕР === */
+        .main-footer {
+            background: #fff;
+            border-top: 1px solid var(--border);
+            padding: 80px 0 60px;
+            margin-top: 100px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand h2 {
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--gray-dark);
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-size: 11px;
+            font-weight: 700;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .footer-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-list a {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--black);
+            transition: color 0.2s;
+        }
+
+        .footer-list a:hover {
+            color: var(--blue);
+        }
+
+        /* Иконки соцсетей */
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-link:hover {
+            background: var(--blue);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .footer-contact-item {
+            margin-bottom: 20px;
+        }
+
+        .footer-label {
+            display: block;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .footer-contact-link {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #999;
+        }
+
         .footer-bottom-links {
             display: flex;
             gap: 30px;
@@ -683,23 +870,29 @@
             color: var(--black);
         }
 
-        @media (max-width: 900px) {
+        /* === АДАПТИВ ДЛЯ ПЛАНШЕТОВ (≤1024px) === */
+        @media (max-width: 1024px) {
+            .header-inner,
+            .nav-back-container,
+            .footer-inner {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
             .container {
-                grid-template-columns: 1fr;
+                padding: 40px 24px;
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
             }
 
             .sidebar {
                 position: static;
-                order: -1;
-                margin-bottom: 40px;
-            }
-
-            .event-main h1 {
-                font-size: 32px;
+                width: 100%;
             }
 
             .speakers-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 30px;
             }
 
@@ -707,13 +900,200 @@
                 gap: 16px;
             }
 
+            .action-card-top {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 40px;
+            }
+
+            .info-facts {
+                flex: 1;
+            }
+
+            .sidebar-actions-wrapper {
+                flex: 1;
+                max-width: 300px;
+                margin-top: 0;
+                padding-top: 0;
+                border-top: none;
+            }
+
+            .footer-top {
+                grid-template-columns: 1.4fr 1fr 1fr 1fr;
+                gap: 24px;
+                margin-bottom: 48px;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+            }
+        }
+
+        /* === АДАПТИВ ДЛЯ СМАРТФОНОВ (≤768px) === */
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 14px 16px;
+            }
+
+            .nav-back-container {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: #fff;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                padding: 8px 16px 16px;
+                gap: 0;
+                z-index: 95;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 14px 4px;
+                font-size: 16px;
+                border-bottom: 1px solid var(--gray-light);
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            .container {
+                padding: 32px 16px;
+                gap: 32px;
+            }
+
+            .event-content-wrapper h1 {
+                font-size: 32px;
+                margin-bottom: 24px;
+            }
+
+            .description {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 22px;
+                margin: 40px 0 20px;
+            }
+
             .program-item {
-                grid-template-columns: 60px 1fr;
+                grid-template-columns: 50px 1fr;
                 gap: 16px;
+                padding: 16px 0;
             }
 
             .program-time {
-                text-align: right;
+                text-align: left;
+            }
+
+            .speakers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .speaker-avatar {
+                width: 64px;
+                height: 64px;
+                min-width: 64px;
+                min-height: 64px;
+            }
+
+            .speaker-name {
+                font-size: 16px;
+            }
+
+            /* ФУТЕР: одна колонка */
+            .main-footer {
+                padding: 40px 0 32px;
+                margin-top: 40px;
+            }
+
+            .footer-inner {
+                padding: 0 20px;
+            }
+
+            .footer-top {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+                margin-bottom: 28px;
+            }
+
+            .footer-col h4 {
+                display: none;
+            }
+
+            .footer-label {
+                display: none;
+            }
+
+            .footer-list {
+                gap: 18px;
+            }
+
+            .footer-list a {
+                font-size: 16px;
+            }
+
+            .footer-bottom {
+                border-top: none;
+                padding-top: 0;
+                margin-top: 8px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                font-size: 12px;
+            }
+
+            .footer-bottom-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+        }
+
+        /* === АДАПТИВ ДЛЯ УЗКИХ СМАРТФОНОВ (≤480px) === */
+        @media (max-width: 480px) {
+            .event-content-wrapper h1 {
+                font-size: 26px;
+            }
+
+            .action-card-top {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .sidebar-actions-wrapper {
+                width: 100%;
+                max-width: 100%;
+                margin-top: 24px;
+                padding-top: 24px;
+                border-top: 1px solid #E5E7EB;
+            }
+
+            .sidebar-actions .btn {
+                max-width: 300px;
+                width: 100%;
             }
         }
     </style>
@@ -723,21 +1103,26 @@
     <header>
         <div class="header-inner">
             <a href="index.html" class="logo">Рентгенхирурги</a>
-            <nav class="nav-links">
+            <nav class="nav-links" id="navLinks">
                 <a href="index.html" class="active">Мероприятия</a>
                 <a href="jurnal.html">Журнал</a>
                 <a href="clinrec.html">Клинреки</a>
             </nav>
+            <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false" type="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
-
+    
     <div class="nav-back-container">
         <a href="index.html" class="nav-back">← Все события</a>
     </div>
 
     <div class="container">
-        <!-- ЛЕВАЯ ЧАСТЬ -->
-        <main class="event-main">
+        <!-- БЛОК ЗАГОЛОВКА -->
+        <div class="event-content-wrapper">
             <div class="event-badges">
                 <span class="badge badge-nmo">12 НМО</span>
                 <span class="badge badge-hybrid">С трансляцией</span>
@@ -749,7 +1134,48 @@
                 Крупнейшее событие региона для специалистов по аритмологии. Обсудим современные подходы к лечению
                 фибрилляции предсердий и новые протоколы имплантации ЭКС.
             </p>
+        </div>
 
+        <!-- ПРАВАЯ ЧАСТЬ (САЙДБАР) - на мобильных идет сразу после заголовка -->
+        <aside class="sidebar">
+            <div class="action-card">
+                <div class="action-card-top">
+                    <!-- БЛОК ФАКТОВ -->
+                    <div class="info-facts">
+                        <div class="info-value">15 мая 2026, 09:00</div>
+                        <div class="info-value">
+                            Казань, ул. Ершова, 1А, <br>ГТРК «Корстон»
+                            <a href="https://yandex.ru/maps/?text=Казань, ул. Ершова, 1А, ГТРК «Корстон»" target="_blank"
+                                class="map-link">
+                                Яндекс Карты ↗
+                            </a>
+                        </div>
+                        <div class="info-value">Бесплатно</div>
+                    </div>
+
+                    <!-- ДЕЙСТВИЯ -->
+                    <div class="sidebar-actions-wrapper">
+                        <div class="sidebar-actions">
+                            <button class="btn btn-reg" style="margin-bottom:0">Зарегистрироваться</button>
+                            <button class="btn btn-online" style="margin-bottom:0">Смотреть трансляцию</button>
+                        </div>
+                        <div class="registration-note">Регистрация на сайте организатора</div>
+                        <a href="#" class="btn-download-link" onclick="window.print(); return false;">
+                            Скачать программу
+                        </a>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <div class="organizer">
+                    Организатор: Российское кардиологическое общество (РКО)
+                </div>
+            </div>
+        </aside>
+
+        <!-- БЛОК ДЕТАЛЕЙ (Программа и Спикеры) -->
+        <div class="event-details-wrapper">
             <h2 class="section-title">ПРОГРАММА</h2>
 
             <div class="program-wrapper">
@@ -945,43 +1371,7 @@
 
             <button class="show-all-btn" id="toggleSpeakers" onclick="toggleSpeakers()">Показать всех спикеров
                 (12)</button>
-        </main>
-
-        <!-- ПРАВАЯ ЧАСТЬ (САЙДБАР) -->
-        <aside class="sidebar">
-            <div class="action-card">
-                <!-- БЛОК ФАКТОВ -->
-                <div class="info-facts">
-                    <div class="info-value">15 мая 2026, 09:00</div>
-                    <div class="info-value">
-                        Казань, ул. Ершова, 1А, <br>ГТРК «Корстон»
-                        <a href="https://yandex.ru/maps/?text=Казань, ул. Ершова, 1А, ГТРК «Корстон»" target="_blank"
-                            class="map-link">
-                            Яндекс Карты ↗
-                        </a>
-                    </div>
-                    <div class="info-value">Бесплатно</div>
-                </div>
-
-                <hr class="divider">
-
-                <!-- ДЕЙСТВИЯ -->
-                <div class="sidebar-actions">
-                    <button class="btn btn-reg" style="margin-bottom:0">Зарегистрироваться</button>
-                    <button class="btn btn-online" style="margin-bottom:0">Смотреть трансляцию</button>
-                </div>
-
-                <a href="#" class="btn-download-link" onclick="window.print(); return false;">
-                    Скачать программу
-                </a>
-
-                <hr class="divider">
-
-                <div class="organizer">
-                    Организатор: Российское кардиологическое общество (РКО)
-                </div>
-            </div>
-        </aside>
+        </div>
     </div>
 
     <script>
@@ -996,6 +1386,26 @@
                 extra.classList.add('active');
                 btn.innerText = 'Скрыть часть спикеров';
             }
+        }
+
+        // Бургер меню
+        const burger = document.getElementById('burgerBtn');
+        const navLinks = document.getElementById('navLinks');
+        if (burger && navLinks) {
+            burger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const isOpen = burger.classList.toggle('open');
+                navLinks.classList.toggle('open');
+                burger.setAttribute('aria-expanded', isOpen);
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('header') && navLinks.classList.contains('open')) {
+                    burger.classList.remove('open');
+                    navLinks.classList.remove('open');
+                    burger.setAttribute('aria-expanded', 'false');
+                }
+            });
         }
     </script>
 
@@ -1015,7 +1425,6 @@
                         <li><a href="index.html">Календарь</a></li>
                         <li><a href="jurnal.html">Журнал</a></li>
                         <li><a href="clinrec.html">Клинреки</a></li>
-                        <!-- <li><a href="#">О проекте</a></li> -->
                     </ul>
                 </div>
 
@@ -1033,18 +1442,33 @@
                 </div>
 
                 <!-- Колонка 4: Соцсети -->
-                <div class="footer-col">
+                <div class="footer-col footer-social">
                     <h4>Мы в сети</h4>
-                    <ul class="footer-list">
-                        <li><a href="#">Telegram</a></li>
-                        <li><a href="#">YouTube</a></li>
-                        <li><a href="#">ВКонтакте</a></li>
-                    </ul>
+                    <div class="social-icons">
+                        <a href="#" class="social-link" aria-label="Telegram">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.27 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="ВКонтакте">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.07 14.27h-1.46c-.55 0-.72-.44-1.71-1.43-.86-.83-1.24-.94-1.46-.94-.3 0-.39.09-.39.5v1.31c0 .35-.11.56-1.04.56-1.53 0-3.23-.93-4.43-2.66-1.81-2.54-2.31-4.45-2.31-4.84 0-.21.09-.41.5-.41h1.46c.37 0 .51.17.65.56.72 2.08 1.92 3.9 2.42 3.9.19 0 .27-.09.27-.55v-2.15c-.06-.99-.59-1.07-.59-1.42 0-.17.14-.34.36-.34h2.3c.31 0 .42.17.42.54v2.9c0 .31.14.42.22.42.19 0 .35-.11.7-.46 1.08-1.21 1.85-3.07 1.85-3.07.1-.22.27-.42.64-.42h1.46c.44 0 .53.22.44.54-.18.84-1.94 3.32-1.94 3.32-.15.25-.21.36 0 .64.15.21.65.64.98 1.02.61.69 1.07 1.27 1.2 1.66.13.4-.07.6-.47.6z" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>© 2026, Рентгенхирурги</p>
+                <p>&copy; 2026, Рентгенхирурги</p>
                 <div class="footer-bottom-links">
                     <a href="#" class="footer-bottom-link">Правовая информация</a>
                     <a href="#" class="footer-bottom-link">Политика данных</a>

@@ -43,6 +43,7 @@
         header {
             border-bottom: 1px solid var(--border);
             background: #fff;
+            position: relative;
         }
 
         .header-inner {
@@ -71,6 +72,42 @@
 
         .nav-links a:hover {
             color: var(--blue);
+        }
+
+        /* Бургер-кнопка (по умолчанию скрыта, появляется на мобилке) */
+        .burger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            width: 40px;
+            height: 40px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .burger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--black);
+            border-radius: 2px;
+            transition: transform 0.25s ease, opacity 0.2s ease;
+        }
+
+        .burger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .burger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
 
 
@@ -208,12 +245,53 @@
             gap: 16px;
             padding: 16px 40px;
             /* Паддинг внутри, чтобы границы были шире текста */
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            overflow: hidden;
+        }
+
+        .filters-inner.hidden {
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
         }
 
         .filters-row {
             display: flex;
             gap: 16px;
             align-items: center;
+        }
+
+        /* Кнопка тоггл фильтров (только для мобильных) */
+        .filters-toggle {
+            display: none;
+            width: 100%;
+            padding: 12px 16px;
+            background: #fff;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--black);
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .filters-toggle:hover {
+            background: var(--gray-light);
+        }
+
+        .filters-toggle-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .filters-toggle[aria-expanded="false"] .filters-toggle-icon {
+            transform: rotate(180deg);
         }
 
         /* --- Первый этаж (Инпуты) --- */
@@ -722,6 +800,36 @@
             color: var(--blue);
         }
 
+        /* Иконки соцсетей */
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-link:hover {
+            background: var(--blue);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
         .footer-contact-item {
             margin-bottom: 20px;
         }
@@ -758,67 +866,242 @@
             color: var(--black);
         }
 
-        /* Адаптив для мобилок */
+        /* === АДАПТИВ ДЛЯ ПЛАНШЕТОВ (≤1024px) === */
+        @media (max-width: 1024px) {
+
+            .header-inner,
+            .filters-inner,
+            .footer-inner {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .nav-links {
+                gap: 20px;
+                font-size: 14px;
+            }
+
+            .showcase {
+                padding: 0 24px;
+                gap: 16px;
+                margin: 24px auto;
+            }
+
+            .card-main {
+                min-height: 340px;
+                padding: 32px;
+            }
+
+            .card-side {
+                padding: 24px;
+            }
+
+            .title-xl {
+                font-size: 28px;
+            }
+
+            .timeline-container {
+                margin: 40px auto;
+            }
+
+            .day-group {
+                padding: 0 24px;
+                gap: 24px;
+                grid-template-columns: 64px 1fr;
+            }
+
+            .month-header {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            /* ФИЛЬТРЫ: на планшете чипсы и тоггл не помещаются в одну строку — стэкаем */
+            .sub-filters {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .f-chips-wrap {
+                width: 100%;
+                flex-wrap: wrap;
+                gap: 12px 20px;
+            }
+
+            .f-chips {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .f-toggles {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            /* ФУТЕР: оставляем 4 колонки в одну строку, бренд чуть шире */
+            .footer-top {
+                grid-template-columns: 1.4fr 1fr 1fr 1fr;
+                gap: 24px;
+                margin-bottom: 48px;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+            }
+
+            .footer-col h4 {
+                margin-bottom: 18px;
+            }
+
+            .main-footer {
+                padding: 60px 0 40px;
+                margin-top: 60px;
+            }
+        }
+
+        /* === АДАПТИВ ДЛЯ СМАРТФОНОВ (≤768px) === */
         @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
+
+            /* ШАПКА: показываем бургер, навигация превращается в выпадающее меню */
+            .header-inner {
+                padding: 14px 16px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .burger {
+                display: flex;
             }
 
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: #fff;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                padding: 8px 16px 16px;
+                gap: 0;
+                z-index: 95;
             }
 
-            /* На мобилке нужен бургер */
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 14px 4px;
+                font-size: 16px;
+                border-bottom: 1px solid var(--gray-light);
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            /* ВИТРИНА */
             .showcase {
                 grid-template-columns: 1fr;
-                padding: 0 20px;
+                padding: 0 16px;
                 margin: 20px auto;
+                gap: 12px;
             }
 
             .card-main {
-                min-height: 300px;
-                padding: 25px;
+                min-height: 280px;
+                padding: 24px;
             }
 
-            .filters {
-                padding: 12px 20px;
+            .card-side {
+                padding: 22px;
+            }
+
+            .title-xl {
+                font-size: 24px;
+            }
+
+            .title-md {
+                font-size: 18px;
+            }
+
+            .desc {
+                font-size: 14px;
+                margin-bottom: 18px;
+            }
+
+            /* ФИЛЬТРЫ */
+            .filters-toggle {
+                display: flex;
+            }
+
+            .filters-inner {
+                padding: 12px 16px;
+                gap: 12px;
             }
 
             .main-filters {
                 flex-wrap: wrap;
+                gap: 8px;
             }
 
             .f-search {
                 width: 100%;
                 order: -1;
+                flex-basis: 100%;
             }
 
-            /* Поиск на всю ширину сверху */
-            .f-select,
+            /* Локация и дата делят строку пополам */
+            .f-location-search,
             .f-date {
-                width: calc(50% - 8px);
-                flex-grow: 1;
+                width: calc(50% - 4px);
+                flex: 1 1 calc(50% - 4px);
+                min-width: 0;
             }
 
+            .f-label {
+                display: none;
+            }
+
+            .filter-box input[type="date"] {
+                padding: 0 4px;
+            }
+
+            /* Подфильтры (темы и галочки) — в столбик */
             .sub-filters {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
+                gap: 10px;
             }
 
-            /* Горизонтальный скролл для тем на мобилке (как в Telegram/YouTube) */
+            .f-chips-wrap {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .f-chips-divider {
+                display: none;
+            }
+
+            /* Горизонтальный скролл для чипсов (как в Telegram/YouTube) */
             .f-chips {
                 width: 100%;
                 overflow-x: auto;
                 padding-bottom: 4px;
-                /* Место для скроллбара */
                 -webkit-overflow-scrolling: touch;
+                flex-wrap: nowrap;
             }
 
             .f-chips::-webkit-scrollbar {
                 display: none;
             }
 
-            /* Прячем ползунок */
             .chip span {
                 white-space: nowrap;
             }
@@ -828,25 +1111,34 @@
                 flex-wrap: wrap;
             }
 
+            /* КАЛЕНДАРЬ */
             .timeline-container {
-                padding: 0 20px;
-                margin: 40px auto;
+                margin: 28px auto;
+            }
+
+            .month-header {
+                font-size: 20px;
+                margin-bottom: 24px;
+                padding: 0 16px 12px 16px;
             }
 
             .day-group {
                 display: block;
+                padding: 0 16px;
+                margin-bottom: 28px;
+                max-width: 100%;
             }
 
             .date-sticky {
                 position: static;
-                margin-bottom: 20px;
-                padding-bottom: 10px;
+                margin-bottom: 16px;
+                padding-bottom: 8px;
                 border-bottom: 1px solid var(--black);
             }
 
             .day-num {
                 display: inline-block;
-                font-size: 24px;
+                font-size: 22px;
                 margin-right: 10px;
             }
 
@@ -854,16 +1146,164 @@
                 display: inline-block;
             }
 
+            .event-card {
+                padding-bottom: 24px;
+                margin-bottom: 24px;
+            }
+
+            .event-title {
+                font-size: 17px;
+            }
+
+            .event-teaser {
+                font-size: 14px;
+                margin-bottom: 16px;
+            }
+
+            .meta {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            /* ПОДПИСКА */
             .sub-feed {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 20px;
-                padding: 25px;
+                align-items: stretch;
+                gap: 16px;
+                padding: 22px;
+                margin: 16px 0 40px 0;
             }
 
             .sub-form {
                 width: 100%;
                 flex-direction: column;
+            }
+
+            /* ФУТЕР: всё в одну вертикальную линию слева, без колонок и заголовков */
+            .main-footer {
+                padding: 40px 0 32px;
+                margin-top: 40px;
+            }
+
+            .footer-inner {
+                padding: 0 20px;
+            }
+
+            .footer-top {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+                margin-bottom: 28px;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+                font-size: 14px;
+            }
+
+            /* Убираем серые слова-ярлыки — структура читается через воздух */
+            .footer-col h4 {
+                display: none;
+            }
+
+            .footer-label {
+                display: none;
+            }
+
+            /* Туч-таргеты: между ссылками 18px по вертикали */
+            .footer-list {
+                gap: 18px;
+            }
+
+            .footer-list a {
+                font-size: 16px;
+            }
+
+            .footer-contact-item {
+                margin-bottom: 16px;
+            }
+
+            .footer-contact-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .footer-contact-link {
+                font-size: 16px;
+            }
+
+            /* Соцсети крупнее — удобно тапать */
+            .social-link {
+                width: 48px;
+                height: 48px;
+            }
+
+            .social-link svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            /* Юридический блок: без линии-разделителя, мелкий и серый */
+            .footer-bottom {
+                border-top: none;
+                padding-top: 0;
+                margin-top: 8px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                font-size: 12px;
+                color: #999;
+            }
+
+            .footer-bottom-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+        }
+
+        /* === АДАПТИВ ДЛЯ УЗКИХ СМАРТФОНОВ (≤480px) === */
+        @media (max-width: 480px) {
+
+            .card-main {
+                min-height: 240px;
+                padding: 20px;
+            }
+
+            .title-xl {
+                font-size: 22px;
+            }
+
+            /* Локация и дата — каждая на свою строку */
+            .f-location-search,
+            .f-date {
+                width: 100%;
+                flex: 1 1 100%;
+            }
+
+            .f-toggles {
+                width: 100%;
+            }
+
+            .toggle-btn {
+                width: 100%;
+            }
+
+            .toggle-btn span {
+                display: block;
+                text-align: center;
+            }
+
+            .day-num {
+                font-size: 20px;
+            }
+
+            .event-title {
+                font-size: 16px;
+            }
+
+            /* На очень узких экранах соцсети центрируем для красоты */
+            .footer-social .social-icons {
+                justify-content: flex-start;
             }
         }
     </style>
@@ -876,11 +1316,16 @@
     <header>
         <div class="header-inner">
             <a href="index.html" class="logo">Рентгенхирурги</a>
-            <div class="nav-links">
+            <nav class="nav-links" id="navLinks">
                 <a href="index.html">Мероприятия</a>
                 <a href="jurnal.html">Журнал</a>
                 <a href="clinrec.html">Клинреки</a>
-            </div>
+            </nav>
+            <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false" type="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
@@ -915,6 +1360,13 @@
 
     <!-- ДВУХЭТАЖНЫЕ ЛИПКИЕ ФИЛЬТРЫ -->
     <div class="filters">
+        <!-- Кнопка тоггл для мобильных -->
+        <button class="filters-toggle" id="filtersToggle" aria-expanded="true" aria-label="Показать фильтры">
+            <span class="filters-toggle-text">Скрыть фильтры</span>
+            <svg class="filters-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </button>
         <div class="filters-inner">
 
             <!-- ПЕРВЫЙ ЭТАЖ: Поиск, Город, Дата -->
@@ -1037,6 +1489,42 @@
                     }
                 });
             });
+
+            // Бургер-меню для мобильной версии
+            const burger = document.getElementById('burgerBtn');
+            const navLinks = document.getElementById('navLinks');
+            if (burger && navLinks) {
+                burger.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const isOpen = burger.classList.toggle('open');
+                    navLinks.classList.toggle('open');
+                    burger.setAttribute('aria-expanded', isOpen);
+                });
+                // Закрываем меню при клике вне шапки
+                document.addEventListener('click', function (e) {
+                    if (!e.target.closest('header') && navLinks.classList.contains('open')) {
+                        burger.classList.remove('open');
+                        navLinks.classList.remove('open');
+                        burger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            // Тоггл фильтров для мобильной версии
+            const filtersToggle = document.getElementById('filtersToggle');
+            const filtersInner = document.querySelector('.filters-inner');
+            if (filtersToggle && filtersInner) {
+                filtersToggle.addEventListener('click', function () {
+                    const isExpanded = filtersToggle.getAttribute('aria-expanded') === 'true';
+                    filtersToggle.setAttribute('aria-expanded', !isExpanded);
+                    filtersInner.classList.toggle('hidden');
+
+                    const toggleText = filtersToggle.querySelector('.filters-toggle-text');
+                    if (toggleText) {
+                        toggleText.textContent = isExpanded ? 'Показать фильтры' : 'Скрыть фильтры';
+                    }
+                });
+            }
         });
     </script>
 
@@ -1218,13 +1706,28 @@
                 </div>
 
                 <!-- Колонка 4: Соцсети -->
-                <div class="footer-col">
+                <div class="footer-col footer-social">
                     <h4>Мы в сети</h4>
-                    <ul class="footer-list">
-                        <li><a href="#">Telegram</a></li>
-                        <li><a href="#">YouTube</a></li>
-                        <li><a href="#">ВКонтакте</a></li>
-                    </ul>
+                    <div class="social-icons">
+                        <a href="#" class="social-link" aria-label="Telegram">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.27 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="ВКонтакте">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.07 14.27h-1.46c-.55 0-.72-.44-1.71-1.43-.86-.83-1.24-.94-1.46-.94-.3 0-.39.09-.39.5v1.31c0 .35-.11.56-1.04.56-1.53 0-3.23-.93-4.43-2.66-1.81-2.54-2.31-4.45-2.31-4.84 0-.21.09-.41.5-.41h1.46c.37 0 .51.17.65.56.72 2.08 1.92 3.9 2.42 3.9.19 0 .27-.09.27-.55v-2.15c-.06-.99-.59-1.07-.59-1.42 0-.17.14-.34.36-.34h2.3c.31 0 .42.17.42.54v2.9c0 .31.14.42.22.42.19 0 .35-.11.7-.46 1.08-1.21 1.85-3.07 1.85-3.07.1-.22.27-.42.64-.42h1.46c.44 0 .53.22.44.54-.18.84-1.94 3.32-1.94 3.32-.15.25-.21.36 0 .64.15.21.65.64.98 1.02.61.69 1.07 1.27 1.2 1.66.13.4-.07.6-.47.6z" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
 

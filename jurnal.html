@@ -36,6 +36,7 @@
         header {
             border-bottom: 1px solid var(--border);
             background: #fff;
+            position: relative;
         }
 
         .header-inner {
@@ -73,6 +74,42 @@
 
         .nav-links a.active {
             color: var(--blue);
+        }
+
+        /* Бургер-кнопка (по умолчанию скрыта, появляется на мобилке) */
+        .burger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            width: 40px;
+            height: 40px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .burger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--black);
+            border-radius: 2px;
+            transition: transform 0.25s ease, opacity 0.2s ease;
+        }
+
+        .burger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .burger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
 
         .container {
@@ -354,6 +391,36 @@
             color: var(--blue);
         }
 
+        /* Иконки соцсетей */
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-link:hover {
+            background: var(--blue);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
         .footer-contact-item {
             margin-bottom: 20px;
         }
@@ -390,17 +457,267 @@
             color: var(--black);
         }
 
-        @media (max-width: 768px) {
-            .cards-row {
-                grid-template-columns: 1fr;
+        /* === АДАПТИВ ДЛЯ ПЛАНШЕТОВ (≤1024px) === */
+        @media (max-width: 1024px) {
+
+            .header-inner,
+            .footer-inner {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .nav-links {
+                gap: 20px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 40px 24px;
+            }
+
+            h1 {
+                font-size: 40px;
             }
 
             .hero-img {
-                height: 250px;
+                height: 320px;
+            }
+
+            .title-lg {
+                font-size: 28px;
+            }
+
+            /* 3 → 2 колонки на планшете */
+            .cards-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 28px;
+                margin-top: 32px;
+                padding-top: 32px;
+            }
+
+            /* ФУТЕР: 4 колонки в строке, бренд чуть шире */
+            .footer-top {
+                grid-template-columns: 1.4fr 1fr 1fr 1fr;
+                gap: 24px;
+                margin-bottom: 48px;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+            }
+
+            .main-footer {
+                padding: 60px 0 40px;
+                margin-top: 60px;
+            }
+        }
+
+        /* === АДАПТИВ ДЛЯ СМАРТФОНОВ (≤768px) === */
+        @media (max-width: 768px) {
+
+            /* ШАПКА: бургер + выпадающее меню */
+            .header-inner {
+                padding: 14px 16px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: #fff;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                padding: 8px 16px 16px;
+                gap: 0;
+                z-index: 95;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 14px 4px;
+                font-size: 16px;
+                border-bottom: 1px solid var(--gray-light);
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            /* КОНТЕЙНЕР */
+            .container {
+                padding: 28px 16px;
             }
 
             h1 {
                 font-size: 32px;
+                margin-bottom: 16px;
+            }
+
+            .journal-header {
+                margin-bottom: 24px;
+            }
+
+            /* Чипсы — горизонтальный скролл если не помещаются */
+            .journal-filters {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 12px 0;
+                margin: 0 -16px;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .journal-filters::-webkit-scrollbar {
+                display: none;
+            }
+
+            .chip {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            /* ГЕРОЙ-СТАТЬЯ */
+            .hero-img {
+                height: 220px;
+            }
+
+            .title-lg {
+                font-size: 24px;
+            }
+
+            .teaser-hero {
+                font-size: 15px;
+            }
+
+            /* КАРТОЧКИ ВТОРОГО ЭТАЖА */
+            .cards-row {
+                grid-template-columns: 1fr;
+                gap: 28px;
+                margin-top: 32px;
+                padding-top: 32px;
+            }
+
+            .card-img {
+                height: 200px;
+            }
+
+            .title-md {
+                font-size: 17px;
+            }
+
+            /* ФУТЕР: одна вертикальная линия слева, без колонок и заголовков */
+            .main-footer {
+                padding: 40px 0 32px;
+                margin-top: 40px;
+            }
+
+            .footer-inner {
+                padding: 0 20px;
+            }
+
+            .footer-top {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+                margin-bottom: 28px;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+                font-size: 14px;
+            }
+
+            .footer-col h4 {
+                display: none;
+            }
+
+            .footer-label {
+                display: none;
+            }
+
+            .footer-list {
+                gap: 18px;
+            }
+
+            .footer-list a {
+                font-size: 16px;
+            }
+
+            .footer-contact-item {
+                margin-bottom: 16px;
+            }
+
+            .footer-contact-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .footer-contact-link {
+                font-size: 16px;
+            }
+
+            .social-link {
+                width: 48px;
+                height: 48px;
+            }
+
+            .social-link svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .footer-bottom {
+                border-top: none;
+                padding-top: 0;
+                margin-top: 8px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                font-size: 12px;
+                color: #999;
+            }
+
+            .footer-bottom-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+        }
+
+        /* === АДАПТИВ ДЛЯ УЗКИХ СМАРТФОНОВ (≤480px) === */
+        @media (max-width: 480px) {
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .hero-img {
+                height: 180px;
+            }
+
+            .title-lg {
+                font-size: 22px;
+            }
+
+            .card-img {
+                height: 180px;
+            }
+
+            .title-md {
+                font-size: 16px;
             }
         }
     </style>
@@ -411,11 +728,16 @@
     <header>
         <div class="header-inner">
             <a href="index.html" class="logo">Рентгенхирурги</a>
-            <nav class="nav-links">
+            <nav class="nav-links" id="navLinks">
                 <a href="index.html">Мероприятия</a>
                 <a href="jurnal.html" class="active">Журнал</a>
                 <a href="clinrec.html">Клинреки</a>
             </nav>
+            <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false" type="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
@@ -535,13 +857,25 @@
                 </div>
 
                 <!-- Колонка 4: Соцсети -->
-                <div class="footer-col">
+                <div class="footer-col footer-social">
                     <h4>Мы в сети</h4>
-                    <ul class="footer-list">
-                        <li><a href="#">Telegram</a></li>
-                        <li><a href="#">YouTube</a></li>
-                        <li><a href="#">ВКонтакте</a></li>
-                    </ul>
+                    <div class="social-icons">
+                        <a href="#" class="social-link" aria-label="Telegram">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.27 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="ВКонтакте">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.07 14.27h-1.46c-.55 0-.72-.44-1.71-1.43-.86-.83-1.24-.94-1.46-.94-.3 0-.39.09-.39.5v1.31c0 .35-.11.56-1.04.56-1.53 0-3.23-.93-4.43-2.66-1.81-2.54-2.31-4.45-2.31-4.84 0-.21.09-.41.5-.41h1.46c.37 0 .51.17.65.56.72 2.08 1.92 3.9 2.42 3.9.19 0 .27-.09.27-.55v-2.15c-.06-.99-.59-1.07-.59-1.42 0-.17.14-.34.36-.34h2.3c.31 0 .42.17.42.54v2.9c0 .31.14.42.22.42.19 0 .35-.11.7-.46 1.08-1.21 1.85-3.07 1.85-3.07.1-.22.27-.42.64-.42h1.46c.44 0 .53.22.44.54-.18.84-1.94 3.32-1.94 3.32-.15.25-.21.36 0 .64.15.21.65.64.98 1.02.61.69 1.07 1.27 1.2 1.66.13.4-.07.6-.47.6z" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -554,6 +888,30 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Бургер-меню для мобильной версии
+        document.addEventListener('DOMContentLoaded', function () {
+            const burger = document.getElementById('burgerBtn');
+            const navLinks = document.getElementById('navLinks');
+            if (!burger || !navLinks) return;
+
+            burger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const isOpen = burger.classList.toggle('open');
+                navLinks.classList.toggle('open');
+                burger.setAttribute('aria-expanded', isOpen);
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('header') && navLinks.classList.contains('open')) {
+                    burger.classList.remove('open');
+                    navLinks.classList.remove('open');
+                    burger.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
 
 </body>
 

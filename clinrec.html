@@ -38,6 +38,7 @@
         header {
             border-bottom: 1px solid var(--border);
             background: #fff;
+            position: relative;
         }
 
         .header-inner {
@@ -70,6 +71,42 @@
 
         .nav-links a.active {
             color: var(--blue);
+        }
+
+        /* Бургер-кнопка (по умолчанию скрыта, появляется на мобилке) */
+        .burger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            width: 40px;
+            height: 40px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .burger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--black);
+            border-radius: 2px;
+            transition: transform 0.25s ease, opacity 0.2s ease;
+        }
+
+        .burger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .burger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
 
         a {
@@ -111,6 +148,56 @@
             margin-bottom: 40px;
         }
 
+        /* Кнопка тоггл фильтров (только для мобильных) */
+        .filters-toggle {
+            display: none;
+            width: 100%;
+            padding: 12px 16px;
+            background: #fff;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--black);
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .filters-toggle:hover {
+            background: var(--gray-light);
+        }
+
+        .filters-toggle-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .filters-toggle[aria-expanded="false"] .filters-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .search-filters {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            margin-top: 16px;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            overflow: hidden;
+        }
+
+        .search-filters.hidden {
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
         .search-input {
             width: 100%;
             font-size: 18px;
@@ -127,14 +214,6 @@
         }
 
         /* === ФИЛЬТРЫ: ПРАВИЛО ВНУТРЕННЕГО И ВНЕШНЕГО === */
-        .search-filters {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
-
         .filter-group {
             display: flex;
             align-items: center;
@@ -143,9 +222,7 @@
         }
 
         .filter-divider {
-            width: 1px;
-            height: 20px;
-            background-color: var(--border);
+            display: none;
         }
 
         .chip {
@@ -543,6 +620,36 @@
             color: var(--blue);
         }
 
+        /* Иконки соцсетей */
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-link:hover {
+            background: var(--blue);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
         .footer-contact-item {
             margin-bottom: 20px;
         }
@@ -579,66 +686,257 @@
             color: var(--black);
         }
 
-        /* === АДАПТИВНОСТЬ === */
-        @media (max-width: 768px) {
-            .search-filters {
-                gap: 16px;
+        /* === АДАПТИВ ДЛЯ ПЛАНШЕТОВ (≤1024px) === */
+        @media (max-width: 1024px) {
+
+            .header-inner,
+            .footer-inner {
+                padding-left: 24px;
+                padding-right: 24px;
             }
 
-            .filter-divider {
+            .nav-links {
+                gap: 20px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 40px 24px;
+            }
+
+            .page-header h1 {
+                font-size: 40px;
+            }
+
+            /* ФУТЕР: оставляем 4 колонки, чуть плотнее */
+            .footer-top {
+                grid-template-columns: 1.4fr 1fr 1fr 1fr;
+                gap: 24px;
+                margin-bottom: 48px;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+            }
+        }
+
+        /* === АДАПТИВ ДЛЯ СМАРТФОНОВ (≤768px) === */
+        @media (max-width: 768px) {
+
+            /* ШАПКА: бургер + меню */
+            .header-inner {
+                padding: 14px 16px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: #fff;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                padding: 8px 16px 16px;
+                gap: 0;
+                z-index: 95;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 14px 4px;
+                font-size: 16px;
+                border-bottom: 1px solid var(--gray-light);
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            /* КОНТЕЙНЕР И ПОИСК */
+            .container {
+                padding: 28px 16px;
+            }
+
+            .page-header {
+                margin-bottom: 32px;
+            }
+
+            .page-header h1 {
+                font-size: 32px;
+            }
+
+            .search-block {
+                padding: 12px 0 20px;
+                margin-bottom: 24px;
+            }
+
+            .search-input {
+                font-size: 16px;
+                padding: 12px 16px;
+            }
+
+            /* ФИЛЬТРЫ: кнопка тоггл */
+            .filters-toggle {
+                display: flex;
+            }
+
+            /* ФИЛЬТРЫ: каждая группа в своей строке со скроллом */
+            .search-filters {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                padding: 4px 0 8px;
+                margin: 12px 0 0 0;
+                overflow: visible;
+                /* Отключаем общий скролл */
+            }
+
+            .filter-group {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 4px;
+                margin: 0 -16px;
+                padding-left: 16px;
+                padding-right: 16px;
+                flex-wrap: nowrap;
+                width: calc(100% + 32px);
+            }
+
+            .filter-group::-webkit-scrollbar {
                 display: none;
             }
 
+            .chip {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            /* РЕЕСТР: карточки в столбик */
             .cr-row {
                 flex-direction: column;
-                align-items: flex-start;
-                position: relative;
-                padding: 16px 0;
+                align-items: stretch;
+                padding: 20px 0;
             }
 
             .cr-icd {
-                margin-bottom: 8px;
-                font-size: 12px;
-                padding: 2px 6px;
+                width: fit-content;
+                flex-direction: row;
+                gap: 8px;
+                margin-right: 0;
+                margin-bottom: 12px;
+                padding: 4px 10px;
+            }
+
+            .cr-icd span {
+                border-bottom: none;
+                border-right: 1px solid #e0e0e0;
+                padding-right: 8px;
+                padding-bottom: 0;
+            }
+
+            .cr-icd span:last-child {
+                border-right: none;
+                padding-right: 0;
             }
 
             .cr-main {
                 padding-right: 0;
-                margin-bottom: 12px;
+                margin-bottom: 20px;
             }
 
-            .cr-status {
-                position: absolute;
-                top: 16px;
-                right: 0;
-                margin-right: 0;
-                text-align: right;
+            .cr-title {
+                font-size: 17px;
+            }
+
+            .cr-meta {
+                flex-wrap: wrap;
+                font-size: 13px;
+                gap: 4px 8px;
             }
 
             .cr-action {
                 width: 100%;
-                text-align: left;
             }
 
             .btn-download {
+                width: 100%;
+                height: 48px;
                 flex-direction: row;
                 justify-content: space-between;
-                padding: 12px 16px;
-                background: #f8f9fa;
-                border: 1px solid var(--border);
+                padding: 0 16px;
             }
 
-            .dl-meta {
-                margin-top: 0;
+            /* ФУТЕР: одна колонка */
+            .main-footer {
+                padding: 40px 0 32px;
+                margin-top: 40px;
             }
 
+            .footer-inner {
+                padding: 0 20px;
+            }
+
+            .footer-top {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+                margin-bottom: 28px;
+            }
+
+            .footer-col h4 {
+                display: none;
+            }
+
+            .footer-label {
+                display: none;
+            }
+
+            .footer-list {
+                gap: 18px;
+            }
+
+            .footer-list a {
+                font-size: 16px;
+            }
+
+            .footer-bottom {
+                border-top: none;
+                padding-top: 0;
+                margin-top: 8px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                font-size: 12px;
+            }
+
+            .footer-bottom-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+        }
+
+        /* === АДАПТИВ ДЛЯ УЗКИХ СМАРТФОНОВ (≤480px) === */
+        @media (max-width: 480px) {
             .page-header h1 {
-                font-size: 28px;
+                font-size: 26px;
             }
 
-            .btn-load-more {
-                width: 100%;
-                justify-content: center;
+            .cr-title {
+                font-size: 16px;
             }
         }
     </style>
@@ -650,11 +948,16 @@
     <header>
         <div class="header-inner">
             <a href="index.html" class="logo">Рентгенхирурги</a>
-            <div class="nav-links">
+            <nav class="nav-links" id="navLinks">
                 <a href="index.html">Мероприятия</a>
                 <a href="jurnal.html">Журнал</a>
                 <a href="clinrec.html" class="active">Клинреки</a>
-            </div>
+            </nav>
+            <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false" type="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
@@ -669,6 +972,14 @@
         <div class="search-block">
             <input type="text" id="searchInput" class="search-input"
                 placeholder="Введите название болезни или код МКБ (например, I20)">
+
+            <!-- Кнопка тоггл для мобильных -->
+            <button class="filters-toggle" id="filtersToggle" aria-expanded="true" aria-label="Показать фильтры">
+                <span class="filters-toggle-text">Скрыть фильтры</span>
+                <svg class="filters-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
 
             <div class="search-filters">
                 <!-- Группа 1: Статус -->
@@ -743,13 +1054,28 @@
                 </div>
 
                 <!-- Колонка 4: Соцсети -->
-                <div class="footer-col">
+                <div class="footer-col footer-social">
                     <h4>Мы в сети</h4>
-                    <ul class="footer-list">
-                        <li><a href="#">Telegram</a></li>
-                        <li><a href="#">YouTube</a></li>
-                        <li><a href="#">ВКонтакте</a></li>
-                    </ul>
+                    <div class="social-icons">
+                        <a href="#" class="social-link" aria-label="Telegram">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.27 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="ВКонтакте">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.07 14.27h-1.46c-.55 0-.72-.44-1.71-1.43-.86-.83-1.24-.94-1.46-.94-.3 0-.39.09-.39.5v1.31c0 .35-.11.56-1.04.56-1.53 0-3.23-.93-4.43-2.66-1.81-2.54-2.31-4.45-2.31-4.84 0-.21.09-.41.5-.41h1.46c.37 0 .51.17.65.56.72 2.08 1.92 3.9 2.42 3.9.19 0 .27-.09.27-.55v-2.15c-.06-.99-.59-1.07-.59-1.42 0-.17.14-.34.36-.34h2.3c.31 0 .42.17.42.54v2.9c0 .31.14.42.22.42.19 0 .35-.11.7-.46 1.08-1.21 1.85-3.07 1.85-3.07.1-.22.27-.42.64-.42h1.46c.44 0 .53.22.44.54-.18.84-1.94 3.32-1.94 3.32-.15.25-.21.36 0 .64.15.21.65.64.98 1.02.61.69 1.07 1.27 1.2 1.66.13.4-.07.6-.47.6z" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -956,22 +1282,44 @@
 
                 if (group === 'age') currentAge = val;
                 else if (group === 'status') currentStatus = val;
-
                 renderList(true);
             });
         });
 
-        function resetFilters() {
-            searchInput.value = '';
-            currentSearch = '';
-            currentAge = 'all';
-            currentStatus = 'all';
+        // Бургер-меню для мобильной версии
+        const burger = document.getElementById('burgerBtn');
+        const navLinks = document.getElementById('navLinks');
+        if (burger && navLinks) {
+            burger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const isOpen = burger.classList.toggle('open');
+                navLinks.classList.toggle('open');
+                burger.setAttribute('aria-expanded', isOpen);
+            });
+            // Закрываем меню при клике вне шапки
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('header') && navLinks.classList.contains('open')) {
+                    burger.classList.remove('open');
+                    navLinks.classList.remove('open');
+                    burger.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
 
-            chips.forEach(c => c.classList.remove('active'));
-            document.querySelector('.chip[data-group="age"][data-val="all"]').classList.add('active');
-            document.querySelector('.chip[data-group="status"][data-val="all"]').classList.add('active');
+        // Тоггл фильтров для мобильной версии
+        const filtersToggle = document.getElementById('filtersToggle');
+        const searchFilters = document.querySelector('.search-filters');
+        if (filtersToggle && searchFilters) {
+            filtersToggle.addEventListener('click', function () {
+                const isExpanded = filtersToggle.getAttribute('aria-expanded') === 'true';
+                filtersToggle.setAttribute('aria-expanded', !isExpanded);
+                searchFilters.classList.toggle('hidden');
 
-            renderList(true);
+                const toggleText = filtersToggle.querySelector('.filters-toggle-text');
+                if (toggleText) {
+                    toggleText.textContent = isExpanded ? 'Показать фильтры' : 'Скрыть фильтры';
+                }
+            });
         }
 
         renderList(true);
